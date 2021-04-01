@@ -42,21 +42,29 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             "list"
         ],
         "tokens": [
+            // {
+            //     "address": "0x2EAA73Bd0db20c64f53fEbeA7b5F5E5Bccc7fb8b",
+            //     "chainId": 88,
+            //     "name": "Ether",
+            //     "symbol": "ETH",
+            //     "decimals": 18,
+            //     "logoURI": "https://lite.sushi.com/images/tokens/WETH.png"
+            // },
             {
-            "address": "0x2EAA73Bd0db20c64f53fEbeA7b5F5E5Bccc7fb8b",
-            "chainId": 88,
-            "name": "Ether",
-            "symbol": "ETH",
-            "decimals": 18,
-            "logoURI": "https://lite.sushi.com/images/tokens/WETH.png"
+                "address": "0xB1f66997A5760428D3a87D68b90BfE0aE64121cC",
+                "chainId": 88,
+                "name": "WrappedTomoChain",
+                "symbol": "WTOMO",
+                "decimals": 18,
+                "logoURI": "https://assets.coingecko.com/coins/images/12646/small/tomoe_logo.png"
             },
             {
-            "address": "0xB1f66997A5760428D3a87D68b90BfE0aE64121cC",
-            "chainId": 88,
-            "name": "WrappedTomoChain",
-            "symbol": "WTOMO",
-            "decimals": 18,
-            "logoURI": "https://assets.coingecko.com/coins/images/12646/small/tomoe_logo.png"
+                "name": "LuaToken",
+                "address": "0x7262fa193e9590B2E075c3C16170f3f2f32F5C74",
+                "symbol": "LUA",
+                "decimals": 18,
+                "chainId": 88,
+                "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xB1f66997A5760428D3a87D68b90BfE0aE64121cC/logo.png"
             }
     ]
     }

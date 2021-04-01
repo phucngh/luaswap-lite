@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import sushiData from "@sushiswap/sushi-data";
+import luaData from "../../lua-data.js";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
 import { EthersContext } from "../context/EthersContext";
@@ -37,7 +37,7 @@ const useHomeState = () => {
         const weth = tokens.find(t => isWrappedNativeToken(t, chainId));
         if (provider && signer && weth && tokens && tokens.length > 0) {
             setLoadingLPTokens(true);
-            const wethPriceUSD = Fraction.parse(String(await sushiData.weth.price()));
+            const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
             const fetched = await fetchMyLPTokens(await signer.getAddress(), tokens, provider);
             try {
                 setLPTokens(
@@ -56,7 +56,7 @@ const useHomeState = () => {
         const weth = tokens.find(t => isWrappedNativeToken(t, chainId));
         if (provider && signer && weth && tokens && tokens.length > 0 && lpTokens) {
             setLoadingPools(true);
-            const wethPriceUSD = Fraction.parse(String(await sushiData.weth.price()));
+            const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
             const fetched = await fetchMyPools(await signer.getAddress(), tokens, provider);
             try {
                 setPools(
