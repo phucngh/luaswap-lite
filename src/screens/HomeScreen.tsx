@@ -44,8 +44,8 @@ const HomeScreen = () => {
     const t = useTranslation();
     const state = useHomeState();
     const { loadingTokens } = useContext(EthersContext);
-    const loading = loadingTokens || state.loadingLPTokens || state.loadingPools;
-    const totalValue = sum(state.tokens) + sum(state.lpTokens) + sum(state.pools);
+    const loading = loadingTokens //|| state.loadingLPTokens || state.loadingPools;
+    const totalValue = sum(state.tokens) //+ sum(state.lpTokens) + sum(state.pools);
     return (
         <Screen>
             <Container>
