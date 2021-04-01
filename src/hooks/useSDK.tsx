@@ -4,7 +4,7 @@ import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@su
 import { ethers } from "ethers";
 import { EthersContext } from "../context/EthersContext";
 import Token from "../types/Token";
-import { convertToken, isETH } from "../utils";
+import { convertToken, isNativeToken } from "../utils";
 import useAllCommonPairs from "./useAllCommonPairs";
 
 // tslint:disable-next-line:max-func-body-length
@@ -20,9 +20,9 @@ const useSDK = () => {
             provider: ethers.providers.BaseProvider
         ) => {
             if (provider) {
-                const eth = isETH(fromToken);
+                const eth = isNativeToken(fromToken);
                 const from = convertToken(fromToken);
-                const to = isETH(toToken) ? Currency.ETHER : convertToken(toToken);
+                const to = isNativeToken(toToken) ? Currency.ETHER : convertToken(toToken);
                 const pairs = await loadAllCommonPairs(from, to, provider);
                 const amount = eth
                     ? CurrencyAmount.ether(fromAmount.toString())

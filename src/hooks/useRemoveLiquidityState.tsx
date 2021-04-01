@@ -5,7 +5,7 @@ import useAsyncEffect from "use-async-effect";
 import { ROUTER } from "../constants/contracts";
 import { EthersContext } from "../context/EthersContext";
 import Token from "../types/Token";
-import { convertToken, formatBalance, isWETH, parseBalance, parseCurrencyAmount } from "../utils";
+import { convertToken, formatBalance, isWrappedNativeToken, parseBalance, parseCurrencyAmount } from "../utils";
 import useLPTokensState, { LPTokensState } from "./useLPTokensState";
 import useSwapRouter from "./useSwapRouter";
 import useZapper from "./useZapper";
@@ -20,7 +20,7 @@ export interface RemoveLiquidityState extends LPTokensState {
 // tslint:disable-next-line:max-func-body-length
 const useRemoveLiquidityState: () => RemoveLiquidityState = () => {
     const state = useLPTokensState("my-lp-tokens");
-    const { provider, signer, getTokenAllowance, updateTokens } = useContext(EthersContext);
+    const { provider, signer, getTokenAllowance, updateTokens, chainId } = useContext(EthersContext);
     const { removeLiquidity, removeLiquidityETH } = useSwapRouter();
     const { zapOut } = useZapper();
     const [loading, setLoading] = useState(false);
@@ -102,10 +102,10 @@ const useRemoveLiquidityState: () => RemoveLiquidityState = () => {
             const fromAmount = parseBalance(state.fromAmount, state.fromToken!.decimals);
             const toAmount = parseBalance(state.toAmount, state.toToken!.decimals);
             const liquidity = parseBalance(state.amount, state.selectedLPToken.decimals);
-            if (isWETH(state.fromToken) || isWETH(state.toToken)) {
-                const token = isWETH(state.fromToken) ? state.toToken! : state.fromToken!;
-                const amountToRemove = isWETH(state.fromToken) ? toAmount : fromAmount;
-                const amountToRemoveETH = isWETH(state.fromToken) ? fromAmount : toAmount;
+            if (isWrappedNativeToken(state.fromToken, chainId) || isWrappedNativeToken(state.toToken, chainId)) {
+                const token = isWrappedNativeToken(state.fromToken, chainId) ? state.toToken! : state.fromToken!;
+                const amountToRemove = isWrappedNativeToken(state.fromToken, chainId) ? toAmount : fromAmount;
+                const amountToRemoveETH = isWrappedNativeToken(state.fromToken, chainId) ? fromAmount : toAmount;
                 const tx = await removeLiquidityETH(token, liquidity, amountToRemove, amountToRemoveETH, signer);
                 await tx.wait();
             } else {

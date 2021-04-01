@@ -4,7 +4,7 @@ import { Trade } from "@sushiswap/sdk";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
 import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
-import { formatBalance, isEmptyValue, isETH, parseBalance, pow10 } from "../utils";
+import { formatBalance, isEmptyValue, isNativeToken, parseBalance, pow10 } from "../utils";
 import useDelayedEffect from "./useDelayedEffect";
 import useDelayedOnBlockEffect from "./useDelayedOnBlockEffect";
 import useSDK from "./useSDK";
@@ -196,7 +196,7 @@ const useSwapState: () => SwapState = () => {
         limitOrderReturn,
         onSwap,
         swapping,
-        limitOrderUnsupported: orderType === "limit" && (isETH(state.fromToken) || isETH(state.toToken)),
+        limitOrderUnsupported: orderType === "limit" && (isNativeToken(state.fromToken) || isNativeToken(state.toToken)),
         onCreateOrder,
         creatingOrder
     };
