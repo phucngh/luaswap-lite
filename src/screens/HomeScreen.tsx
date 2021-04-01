@@ -71,9 +71,9 @@ const Home = ({ state }: { state: HomeState }) => {
         <View style={{ marginTop: IS_DESKTOP ? Spacing.large : Spacing.normal }}>
             <MyTokens state={state} />
             <View style={{ height: Spacing.large }} />
-            <MyLPTokens state={state} />
-            <View style={{ height: Spacing.large }} />
-            <Pools state={state} />
+            {/* <MyLPTokens state={state} /> */}
+            {/* <View style={{ height: Spacing.large }} /> */}
+            {/* <Pools state={state} /> */}
         </View>
     );
 };

@@ -25,7 +25,7 @@ const WebFooter = ({ simple = false }) => {
     const onPressAlchemy = useLinker(ALCHEMY_URL, "", "_blank");
     return (
         <View style={{ width: "100%", padding: Spacing.normal, alignItems: "center" }}>
-            {!simple && (
+            {/* {!simple && (
                 <>
                     <SocialIcons />
                     <TouchableHighlight onPress={onPressAlchemy}>
@@ -38,7 +38,7 @@ const WebFooter = ({ simple = false }) => {
             )}
             <Text note={true} style={{ marginTop: Spacing.tiny }}>
                 Built with ❤️ by SushiSwap (v{Constants.manifest.version})
-            </Text>
+            </Text> */}
             <FlexView style={{ marginTop: Spacing.small }}>
                 <Flag name={"us"} locale={"en"} />
                 <Flag name={"es"} locale={"es"} />
