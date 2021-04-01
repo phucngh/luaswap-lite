@@ -4,7 +4,7 @@ import { FACTORY_ADDRESS as UNISWAP_FACTORY } from "@uniswap/sdk";
 import { ethers } from "ethers";
 import { LP_TOKEN_SCANNER, MASTER_CHEF, ORDER_BOOK, SETTLEMENT } from "../constants/contracts";
 import Fraction from "../constants/Fraction";
-import { ETH } from "../constants/tokens";
+import { BNB, ETH, TOMO } from "../constants/tokens";
 import { ALCHEMY_PROVIDER, KOVAN_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER } from "../context/EthersContext";
 import { Order, OrderStatus } from "../hooks/useSettlement";
 import LPToken from "../types/LPToken";
@@ -14,8 +14,8 @@ import {
     convertToken,
     formatBalance,
     getContract,
-    isETH,
-    isWETH,
+    isNativeToken,
+    isWrappedNativeToken,
     parseBalance,
     parseCurrencyAmount,
     pow10
@@ -24,8 +24,42 @@ import {
 const blocksPerDay = 6500;
 
 export const fetchTokens = async (provider: ethers.providers.BaseProvider, account: string, customTokens?: Token[]) => {
-    const response = await fetch("https://lite.sushi.com/tokens.json");
-    const json = await response.json();
+    // FIXME: Hard code to test, need to fetch from uri
+    // const response = await fetch("https://lite.sushi.com/tokens.json");
+    // const json = await response.json();
+    const json = {
+        "name": "SushiSwap Token List",
+        "timestamp": "2020-11-26T00:00:00+00:00",
+        "version": {
+            "major": 1,
+            "minor": 0,
+            "patch": 0
+        },
+        "logoURI": "https://lite.sushi.com/logo.png",
+        "keywords": [
+            "nomichef",
+            "default",
+            "list"
+        ],
+        "tokens": [
+            {
+            "address": "0x2EAA73Bd0db20c64f53fEbeA7b5F5E5Bccc7fb8b",
+            "chainId": 88,
+            "name": "Ether",
+            "symbol": "ETH",
+            "decimals": 18,
+            "logoURI": "https://lite.sushi.com/images/tokens/WETH.png"
+            },
+            {
+            "address": "0xB1f66997A5760428D3a87D68b90BfE0aE64121cC",
+            "chainId": 88,
+            "name": "WrappedTomoChain",
+            "symbol": "WTOMO",
+            "decimals": 18,
+            "logoURI": "https://assets.coingecko.com/coins/images/12646/small/tomoe_logo.png"
+            }
+    ]
+    }
     const tokens = [...json.tokens, ...(customTokens || [])];
 
     const balances = await fetchTokenBalances(
@@ -33,16 +67,42 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
         account,
         tokens.map(token => token.address)
     );
-    return [
-        {
-            ...ETH,
-            balance: await provider.getBalance(account)
-        },
-        ...tokens.map((token, i) => ({
-            ...token,
-            balance: ethers.BigNumber.from(balances[i] || 0)
-        }))
-    ];
+
+    const chainId = (await provider.getNetwork()).chainId
+    if(chainId == 88) {
+        return [
+            {
+                ...TOMO,
+                balance: await provider.getBalance(account)
+            },
+            ...tokens.map((token, i) => ({
+                ...token,
+                balance: ethers.BigNumber.from(balances[i] || 0)
+            }))
+        ];
+    } else if (chainId == 56) {
+        return [
+            {
+                ...BNB,
+                balance: await provider.getBalance(account)
+            },
+            ...tokens.map((token, i) => ({
+                ...token,
+                balance: ethers.BigNumber.from(balances[i] || 0)
+            }))
+        ];
+    } else {
+        return [
+            {
+                ...ETH,
+                balance: await provider.getBalance(account)
+            },
+            ...tokens.map((token, i) => ({
+                ...token,
+                balance: ethers.BigNumber.from(balances[i] || 0)
+            }))
+        ];
+    }
 };
 
 export const fetchTokenWithValue = async (
@@ -53,7 +113,8 @@ export const fetchTokenWithValue = async (
     provider: ethers.providers.BaseProvider
 ) => {
     let fetched: TokenWithValue;
-    if (isETH(token) || isWETH(token)) {
+    const chainId = (await provider.getNetwork()).chainId
+    if (isNativeToken(token) || isWrappedNativeToken(token, chainId)) {
         fetched = {
             ...token,
             priceUSD: Number(wethPriceUSD.toString()),

@@ -37,7 +37,7 @@ import useSwapState, { OrderType, SwapState } from "../hooks/useSwapState";
 import useTranslation from "../hooks/useTranslation";
 import MetamaskError from "../types/MetamaskError";
 import Token from "../types/Token";
-import { getContract, isEmptyValue, isETH, isETHWETHPair, isWETH, parseBalance } from "../utils";
+import { getContract, isEmptyValue, isNativeToken, isNativeAndWrappedNativePair, isWrappedNativeToken, parseBalance } from "../utils";
 import Screen from "./Screen";
 
 const SwapScreen = () => {
@@ -107,7 +107,7 @@ const FromTokenSelect = ({ state }: { state: SwapState }) => {
     if (!state.orderType) {
         return <Heading text={t("token-to-sell")} disabled={true} />;
     }
-    const ETH = tokens ? tokens.find(token => isETH(token)) : null;
+    const ETH = tokens ? tokens.find(token => isNativeToken(token)) : null;
     return (
         <View>
             <TokenSelect
@@ -116,7 +116,7 @@ const FromTokenSelect = ({ state }: { state: SwapState }) => {
                 onChangeSymbol={state.setFromSymbol}
                 hidden={token =>
                     (!customTokens.find(tk => tk.address === token.address) && token.balance.isZero()) ||
-                    (state.orderType === "limit" && isETH(token))
+                    (state.orderType === "limit" && isNativeToken(token))
                 }
             />
             {state.orderType === "limit" && !state.fromSymbol && ETH && !ETH.balance.isZero() && (
@@ -141,7 +141,7 @@ const ToTokenSelect = ({ state }: { state: SwapState }) => {
                 title={t("token-to-buy")}
                 symbol={state.toSymbol}
                 onChangeSymbol={onChangeSymbol}
-                hidden={token => token.symbol === state.fromSymbol || (limit && isETH(token))}
+                hidden={token => token.symbol === state.fromSymbol || (limit && isNativeToken(token))}
             />
             {state.orderType === "limit" && !state.toSymbol && <LimitOrderUnsupportedNotice />}
         </View>
@@ -218,12 +218,12 @@ const NoPairNotice = ({ state }: { state: SwapState }) => {
 const TradeInfo = ({ state }: { state: SwapState }) => {
     const { chainId } = useContext(EthersContext);
     const t = useTranslation();
-    if (isETHWETHPair(state.fromToken, state.toToken)) return <WrapInfo state={state} />;
+    if (isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken)) return <WrapInfo state={state} />;
     const disabled =
         state.fromSymbol === "" ||
         state.toSymbol === "" ||
         isEmptyValue(state.fromAmount) ||
-        (state.orderType === "limit" && isETH(state.fromToken)) ||
+        (state.orderType === "limit" && isNativeToken(state.fromToken)) ||
         (!state.loading && !state.trade);
     const onGetKeth = useLinker("https://faucet.kovan.network/", "", "_blank");
     return (
@@ -283,9 +283,10 @@ const SwapInfo = ({ state, disabled }: { state: SwapState; disabled: boolean }) 
 
 // tslint:disable-next-line:max-func-body-length
 const SwapControls = ({ state }: { state: SwapState }) => {
+    const { chainId } = useContext(EthersContext);
     const [error, setError] = useState<MetamaskError>({});
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
-    const approveRequired = !isETH(state.fromToken) && !state.fromTokenAllowed;
+    const approveRequired = !isNativeToken(state.fromToken) && !state.fromTokenAllowed;
     return (
         <View style={{ marginTop: Spacing.normal }}>
             {!state.fromToken ||
@@ -295,9 +296,9 @@ const SwapControls = ({ state }: { state: SwapState }) => {
                 <SwapButton state={state} onError={setError} disabled={true} />
             ) : parseBalance(state.fromAmount, state.fromToken.decimals).gt(state.fromToken.balance) ? (
                 <InsufficientBalanceButton symbol={state.fromSymbol} />
-            ) : isWETH(state.fromToken) && isETH(state.toToken) ? (
+            ) : isWrappedNativeToken(state.fromToken, chainId) && isNativeToken(state.toToken) ? (
                 <UnwrapButton state={state} onError={setError} />
-            ) : isETH(state.fromToken) && isWETH(state.toToken) ? (
+            ) : isNativeToken(state.fromToken) && isWrappedNativeToken(state.toToken, chainId) ? (
                 <WrapButton state={state} onError={setError} />
             ) : state.unsupported ? (
                 <UnsupportedButton state={state} />

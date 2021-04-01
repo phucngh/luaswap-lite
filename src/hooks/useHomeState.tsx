@@ -5,7 +5,7 @@ import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
 import { EthersContext } from "../context/EthersContext";
 import LPTokenWithValue from "../types/LPTokenWithValue";
-import { isWETH } from "../utils";
+import { isWrappedNativeToken } from "../utils";
 import { fetchLPTokenWithValue, fetchMyLPTokens, fetchMyPools } from "../utils/fetch-utils";
 import useSDK from "./useSDK";
 
@@ -18,7 +18,7 @@ export interface HomeState {
 
 // tslint:disable-next-line:max-func-body-length
 const useHomeState = () => {
-    const { provider, signer, address, tokens } = useContext(EthersContext);
+    const { provider, signer, address, tokens, chainId } = useContext(EthersContext);
     const [lpTokens, setLPTokens] = useState<LPTokenWithValue[]>();
     const [pools, setPools] = useState<LPTokenWithValue[]>();
     const [loadingLPTokens, setLoadingLPTokens] = useState(true);
@@ -34,7 +34,7 @@ const useHomeState = () => {
 
     // Load Liquidity
     useAsyncEffect(async () => {
-        const weth = tokens.find(t => isWETH(t));
+        const weth = tokens.find(t => isWrappedNativeToken(t, chainId));
         if (provider && signer && weth && tokens && tokens.length > 0) {
             setLoadingLPTokens(true);
             const wethPriceUSD = Fraction.parse(String(await sushiData.weth.price()));
@@ -53,7 +53,7 @@ const useHomeState = () => {
 
     // Load Farming
     useAsyncEffect(async () => {
-        const weth = tokens.find(t => isWETH(t));
+        const weth = tokens.find(t => isWrappedNativeToken(t, chainId));
         if (provider && signer && weth && tokens && tokens.length > 0 && lpTokens) {
             setLoadingPools(true);
             const wethPriceUSD = Fraction.parse(String(await sushiData.weth.price()));

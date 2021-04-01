@@ -6,7 +6,7 @@ import { IS_DESKTOP, Spacing } from "../constants/dimension";
 import useColors from "../hooks/useColors";
 import useStyles from "../hooks/useStyles";
 import Token from "../types/Token";
-import { formatBalance, isETH, parseBalance, pow10 } from "../utils";
+import { formatBalance, isNativeToken, parseBalance, pow10 } from "../utils";
 import Button from "./Button";
 import Heading from "./Heading";
 import Input from "./Input";
@@ -78,7 +78,7 @@ const MaxButton = (props: { token: Token; updateAmount; maxButtonText?: string }
     const onPressMax = useCallback(() => {
         if (props.token) {
             let balance = props.token.balance;
-            if (isETH(props.token)) {
+            if (isNativeToken(props.token)) {
                 // Subtract 0.01 ETH for gas fee
                 const fee = pow10(16);
                 balance = balance.gt(fee) ? balance.sub(fee) : ethers.constants.Zero;

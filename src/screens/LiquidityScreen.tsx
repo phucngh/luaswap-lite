@@ -39,7 +39,7 @@ import useSDK from "../hooks/useSDK";
 import useTranslation from "../hooks/useTranslation";
 import MetamaskError from "../types/MetamaskError";
 import Token from "../types/Token";
-import { convertAmount, convertToken, formatBalance, isEmptyValue, isETH, isETHWETHPair, parseBalance } from "../utils";
+import { convertAmount, convertToken, formatBalance, isEmptyValue, isNativeToken, isNativeAndWrappedNativePair, parseBalance } from "../utils";
 import Screen from "./Screen";
 
 const LiquidityScreen = () => {
@@ -205,6 +205,7 @@ const PriceInfo = ({ state }: { state: AddLiquidityState }) => {
 };
 
 const FirstProviderInfo = ({ state }: { state: AddLiquidityState }) => {
+    const { chainId } = useContext(EthersContext)
     const t = useTranslation();
     const { red, green } = useColors();
     const noAmount = isEmptyValue(state.fromAmount) || isEmptyValue(state.toAmount);
@@ -221,7 +222,7 @@ const FirstProviderInfo = ({ state }: { state: AddLiquidityState }) => {
                 <FirstProviderControls state={state} />
             </InfoBox>
             {/*)}*/}
-            {!isETHWETHPair(state.fromToken, state.toToken) && (
+            {!isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken) && (
                 <Notice
                     text={
                         t("first-provider-desc-1") +
@@ -237,15 +238,16 @@ const FirstProviderInfo = ({ state }: { state: AddLiquidityState }) => {
 
 // tslint:disable-next-line:max-func-body-length
 const FirstProviderControls = ({ state }: { state: AddLiquidityState }) => {
+    const { chainId } = useContext(EthersContext)
     const [error, setError] = useState<MetamaskError>({});
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
-    const fromApproveRequired = !isETH(state.fromToken) && !state.fromTokenAllowed;
-    const toApproveRequired = !isETH(state.toToken) && !state.toTokenAllowed;
+    const fromApproveRequired = !isNativeToken(state.fromToken) && !state.fromTokenAllowed;
+    const toApproveRequired = !isNativeToken(state.toToken) && !state.toTokenAllowed;
     const disabled =
         fromApproveRequired || isEmptyValue(state.fromAmount) || toApproveRequired || isEmptyValue(state.toAmount);
     return (
         <View style={{ marginTop: Spacing.normal }}>
-            {isETHWETHPair(state.fromToken, state.toToken) ? (
+            {isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken) ? (
                 <UnsupportedButton state={state} />
             ) : !state.fromToken || !state.toToken || isEmptyValue(state.fromAmount) || isEmptyValue(state.toAmount) ? (
                 <SupplyButton state={state} onError={setError} disabled={true} />
@@ -347,14 +349,15 @@ const PriceMeta = ({ state, price, disabled }) => {
 
 // tslint:disable-next-line:max-func-body-length
 const Controls = ({ state }: { state: AddLiquidityState }) => {
+    const { chainId } = useContext(EthersContext)
     const [error, setError] = useState<MetamaskError>({});
     const { allowed, setAllowed, loading } = useZapTokenAllowance(state.fromToken);
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
     /*const zap = state.mode === "zapper";
     const fromApproveRequired = !isETH(state.fromToken) && ((zap && !allowed) || (!zap && !state.fromTokenAllowed));
     const toApproveRequired = !isETH(state.toToken) && !zap && !state.toTokenAllowed;*/
-    const fromApproveRequired = !isETH(state.fromToken) && !state.fromTokenAllowed;
-    const toApproveRequired = !isETH(state.toToken) && !state.toTokenAllowed;
+    const fromApproveRequired = !isNativeToken(state.fromToken) && !state.fromTokenAllowed;
+    const toApproveRequired = !isNativeToken(state.toToken) && !state.toTokenAllowed;
     const disabled =
             fromApproveRequired ||
             isEmptyValue(state.fromAmount) ||
@@ -362,7 +365,7 @@ const Controls = ({ state }: { state: AddLiquidityState }) => {
             isEmptyValue(state.toAmount) /*))*/;
     return (
         <View style={{ marginTop: Spacing.normal }}>
-            {isETHWETHPair(state.fromToken, state.toToken) ? (
+            {isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken) ? (
                 <UnsupportedButton state={state} />
             ) : !state.fromToken || !state.toToken || isEmptyValue(state.fromAmount) || isEmptyValue(state.toAmount) ? (
                 <SupplyButton state={state} onError={setError} disabled={true} />
@@ -409,7 +412,7 @@ const useZapTokenAllowance = (zapToken?: Token) => {
                 const minAllowance = ethers.BigNumber.from(2)
                     .pow(96)
                     .sub(1);
-                if (isETH(zapToken)) {
+                if (isNativeToken(zapToken)) {
                     const fromAllowance = await getTokenAllowance(zapToken.address, ZAP_IN);
                     setAllowed(ethers.BigNumber.from(fromAllowance).gte(minAllowance));
                 }

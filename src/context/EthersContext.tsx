@@ -12,7 +12,7 @@ import useSDK from "../hooks/useSDK";
 import Ethereum from "../types/Ethereum";
 import Token from "../types/Token";
 import TokenWithValue from "../types/TokenWithValue";
-import { getContract, isWETH } from "../utils";
+import { getContract, isWrappedNativeToken } from "../utils";
 import { logTransaction } from "../utils/analytics-utils";
 import { fetchTokens, fetchTokenWithValue } from "../utils/fetch-utils";
 
@@ -135,8 +135,8 @@ export const EthersContextProvider = ({ children }) => {
                     setENSName(ens1)
                     break
                 case 88: 
-                    let ens2 = await TOMOCHAIN_MAINET_PROVIDER.lookupAddress(address)
-                    setENSName(ens2)
+                    // let ens2 = await TOMOCHAIN_MAINET_PROVIDER.lookupAddress(address)
+                    // setENSName(ens2)
                     break
                 case 56: 
                     let ens3 = await BSC_MAINET_PROVIDER.lookupAddress(address)
@@ -164,7 +164,7 @@ export const EthersContextProvider = ({ children }) => {
             try {
                 const p = getProvider();
                 const list = await fetchTokens(p, address, customTokens);
-                const weth = list.find(t => isWETH(t));
+                const weth = list.find(t => isWrappedNativeToken(t, chainId));
                 if (list?.length > 0 && weth && p) {
                     const wethPriceUSD = Fraction.parse(String(await sushiData.weth.price()));
                     setTokens(

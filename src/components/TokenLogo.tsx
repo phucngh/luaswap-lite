@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Image, View, ViewStyle } from "react-native";
 
 import useColors from "../hooks/useColors";
+import { EthersContext } from "../context/EthersContext";
 import Token from "../types/Token";
-import { isWETH } from "../utils";
+import { isWrappedNativeToken } from "../utils";
 
 const TokenLogo = (props: {
     token: Token;
@@ -12,12 +13,13 @@ const TokenLogo = (props: {
     disabled?: boolean;
     style?: ViewStyle;
 }) => {
+    const { chainId } = useContext(EthersContext);
     const { backgroundLight: disabled } = useColors();
     const [error, setError] = useState(false);
     const size = props.small ? 22 : 27;
     const placeholder = require("../../assets/empty-token.png");
     const ETH = require("../../assets/ETH.png");
-    const source = props.replaceWETH && isWETH(props.token) ? ETH : { uri: props.token.logoURI };
+    const source = props.replaceWETH && isWrappedNativeToken(props.token, chainId) ? ETH : { uri: props.token.logoURI };
     return (
         <View
             style={[
