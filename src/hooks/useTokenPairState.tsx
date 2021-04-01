@@ -32,8 +32,8 @@ export interface TokenPairState {
 
 // tslint:disable-next-line:max-func-body-length
 const useTokenPairState: () => TokenPairState = () => {
-    const { signer, address, tokens, updateTokens, getTokenAllowance } = useContext(EthersContext);
-    const { wrapETH, unwrapETH } = useWeth();
+    const { signer, address, tokens, updateTokens, getTokenAllowance, chainId } = useContext(EthersContext);
+    const { wrapETH, unwrapETH } = useWeth(chainId);
     const [fromSymbol, setFromSymbol] = useState("");
     const [toSymbol, setToSymbol] = useState("");
     const [fromAmount, setFromAmount] = useState("");

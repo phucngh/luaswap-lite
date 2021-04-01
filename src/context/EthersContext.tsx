@@ -67,7 +67,7 @@ export const EthersContextProvider = ({ children }) => {
     const [ethereum, setEthereum] = useState<Ethereum | undefined>(window.ethereum);
     const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider>();
     const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner>();
-    const [chainId, setChainId] = useState<number>(88);
+    const [chainId, setChainId] = useState<number>(56);
     const [address, setAddress] = useState<string | null>(null);
     const [ensName, setENSName] = useState<string | null>(null);
     const [onBlockListeners, setOnBlockListeners] = useState<{ [name: string]: OnBlockListener }>({});
@@ -278,7 +278,8 @@ export const EthersContextProvider = ({ children }) => {
     );
 
     useEffect(() => {
-        if (provider && chainId === 1) {
+        // if (provider && chainId === 1) {
+        if (provider && chainId === 56) {
             const onBlock = async (block: number) => {
                 for (const listener of Object.entries(onBlockListeners)) {
                     await listener[1]?.(block);

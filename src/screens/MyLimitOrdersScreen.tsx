@@ -233,7 +233,7 @@ const Controls = ({ state }: { state: MyLimitOrdersState }) => {
     useAsyncEffect(() => setError({}), [state.selectedOrder]);
     return (
         <View style={{ marginTop: Spacing.normal }}>
-            {chainId === 88 || chainId === 56 ? <CancelButton state={state} onError={setError} /> : <ChangeNetwork />}
+            {chainId === 56 ? <CancelButton state={state} onError={setError} /> : <ChangeNetwork />}
             {error.message && error.code !== 4001 && <ErrorMessage error={error} />}
         </View>
     );

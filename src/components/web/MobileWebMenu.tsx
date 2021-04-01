@@ -75,7 +75,7 @@ const Status = () => {
     const t = useTranslation();
     const { textLight, green, accent } = useColors();
     const { ethereum, chainId, address, ensName } = useContext(EthersContext);
-    const connected = chainId === 1 && address;
+    const connected = (chainId === 56) && address;
     const title = connected
         ? ensName || address!.substring(0, 6) + "..." + address!.substring(address!.length - 4, address!.length)
         : t("menu.not-connected");

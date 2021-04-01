@@ -1,6 +1,8 @@
 import { ChainId, CurrencyAmount, Percent, Token as SDKToken, TokenAmount, WETH } from "@sushiswap/sdk";
+import { WETH as WTOMO } from "@luaswap/sdk"; 
+import { WETH as WBNB } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
-import { BNB, ETH, TOMO } from "../constants/tokens";
+import { ETH } from "../constants/tokens";
 import Token from "../types/Token";
 import getContract from "./getContract";
 
@@ -50,10 +52,8 @@ export const isNativeToken = (token?: Token) => {
 }
 
 export const isWrappedNativeToken = (token?: Token, chainId = 1) => {
-    if (chainId === 88) {
-        return token?.address.toLowerCase() === "0xb1f66997a5760428d3a87d68b90bfe0ae64121cc";
-    } else if(chainId === 56) {
-        return token?.address.toLowerCase() === "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c";
+    if (chainId === 56) {
+        return token?.address.toLowerCase() === WBNB[56].address.toLowerCase();
     } else {
         return token?.address.toLowerCase() === WETH[1].address.toLowerCase();
     }

@@ -2,6 +2,7 @@ import { FACTORY_ADDRESS as SUSHISWAP_FACTORY, Pair } from "@sushiswap/sdk";
 import sushiData from "@sushiswap/sushi-data";
 import { FACTORY_ADDRESS as UNISWAP_FACTORY } from "@uniswap/sdk";
 import { ethers } from "ethers";
+import _ from "lodash";
 import { LP_TOKEN_SCANNER, MASTER_CHEF, ORDER_BOOK, SETTLEMENT } from "../constants/contracts";
 import Fraction from "../constants/Fraction";
 import { BNB, ETH, TOMO } from "../constants/tokens";
@@ -43,24 +44,25 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
         ],
         "tokens": [
             {
-            "address": "0x2EAA73Bd0db20c64f53fEbeA7b5F5E5Bccc7fb8b",
-            "chainId": 88,
-            "name": "Ether",
+            "address": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
+            "chainId": 56,
+            "name": "Ethereum Token",
             "symbol": "ETH",
             "decimals": 18,
-            "logoURI": "https://lite.sushi.com/images/tokens/WETH.png"
+            "logoURI": "https://lite.sushi.com/images/tokens/ETH.png"
             },
             {
-            "address": "0xB1f66997A5760428D3a87D68b90BfE0aE64121cC",
-            "chainId": 88,
-            "name": "WrappedTomoChain",
-            "symbol": "WTOMO",
+            "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+            "chainId": 56,
+            "name": "Wrapped BNB",
+            "symbol": "WBNB",
             "decimals": 18,
-            "logoURI": "https://assets.coingecko.com/coins/images/12646/small/tomoe_logo.png"
+            "logoURI": "https://lite.sushi.com/images/tokens/BNB.png"
             }
     ]
     }
-    const tokens = [...json.tokens, ...(customTokens || [])];
+    const chainId = (await provider.getNetwork()).chainId
+    const tokens = [...json.tokens, ...(customTokens || [])]
 
     const balances = await fetchTokenBalances(
         provider,
@@ -68,19 +70,7 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
         tokens.map(token => token.address)
     );
 
-    const chainId = (await provider.getNetwork()).chainId
-    if(chainId == 88) {
-        return [
-            {
-                ...TOMO,
-                balance: await provider.getBalance(account)
-            },
-            ...tokens.map((token, i) => ({
-                ...token,
-                balance: ethers.BigNumber.from(balances[i] || 0)
-            }))
-        ];
-    } else if (chainId == 56) {
+    if (chainId == 56) {
         return [
             {
                 ...BNB,

@@ -127,13 +127,18 @@ const FromTokenSelect = ({ state }: { state: SwapState }) => {
 };
 
 const ToTokenSelect = ({ state }: { state: SwapState }) => {
+    const { chainId } = useContext(EthersContext);
     const t = useTranslation();
     if (!state.orderType || !state.fromSymbol) {
         return <Heading text={t("token-to-buy")} disabled={true} />;
     }
     const limit = state.orderType === "limit";
     const onChangeSymbol = (symbol: string) => {
-        state.setToSymbol(limit && symbol === "ETH" ? "WETH" : symbol);
+        if (chainId === 56) {
+            state.setToSymbol(limit && symbol === "BNB" ? "WBNB" : symbol);
+        } else {
+            state.setToSymbol(limit && symbol === "ETH" ? "WETH" : symbol);
+        }
     };
     return (
         <View>
@@ -435,7 +440,7 @@ const LimitOrderControls = ({ state }: { state: SwapState }) => {
                 <FetchingButton />
             ) : (
                 <>
-                    {chainId === 1 ? (
+                    {chainId === 56 ? (
                         <ApproveButton
                             token={state.fromToken!}
                             spender={SETTLEMENT}
