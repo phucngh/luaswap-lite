@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import * as Analytics from "expo-firebase-analytics";
 
 import AsyncStorage from "@react-native-community/async-storage";
-import sushiData from "@sushiswap/sushi-data";
+import luaData from "../../lua-data.js";
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
@@ -166,7 +166,7 @@ export const EthersContextProvider = ({ children }) => {
                 const list = await fetchTokens(p, address, customTokens);
                 const weth = list.find(t => isWrappedNativeToken(t, chainId));
                 if (list?.length > 0 && weth && p) {
-                    const wethPriceUSD = Fraction.parse(String(await sushiData.weth.price()));
+                    const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
                     setTokens(
                         await Promise.all(
                             list.map(async token => await fetchTokenWithValue(token, weth, wethPriceUSD, getPair, p))
