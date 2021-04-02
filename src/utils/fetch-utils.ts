@@ -57,7 +57,7 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             "name": "Wrapped BNB",
             "symbol": "WBNB",
             "decimals": 18,
-            "logoURI": "https://lite.sushi.com/images/tokens/BNB.png"
+            "logoURI": "https://exchange.pancakeswap.finance/images/coins/bnb.png"
             },
             {
             "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
@@ -65,7 +65,7 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             "name": "BUSD Token",
             "symbol": "BUSD",
             "decimals": 18,
-            "logoURI": "https://lite.sushi.com/images/tokens/BNB.png"
+            "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe9e7cea3dedca5984780bafc599bd69add087d56.png"
             }
     ]
     }
