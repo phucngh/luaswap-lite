@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@sushiswap/sdk";
+import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
 import { EthersContext } from "../context/EthersContext";
 import Token from "../types/Token";
@@ -36,9 +36,10 @@ const useSDK = () => {
     const getPair = useCallback(async (fromToken: Token, toToken: Token, provider: ethers.providers.BaseProvider) => {
         const from = convertToken(fromToken);
         const to = convertToken(toToken);
+        // console.log(fromToken, toToken)
+        console.log(provider)
         return await Fetcher.fetchPairData(from, to, provider);
     }, []);
-
     const calculateAmountOfLPTokenMinted = async (pair: Pair, fromAmount: TokenAmount, toAmount: TokenAmount) => {
         const totalSupply = await getTotalSupply(pair.liquidityToken.address);
         if (totalSupply) {

@@ -1,4 +1,4 @@
-import { ChainId, CurrencyAmount, Percent, Token as SDKToken, TokenAmount, WETH } from "@sushiswap/sdk";
+import { ChainId, CurrencyAmount, Percent, Token as SDKToken, TokenAmount, WETH } from "@pancakeswap-libs/sdk";
 import { WETH as WTOMO } from "@luaswap/sdk"; 
 import { WETH as WBNB } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
@@ -64,7 +64,7 @@ export const isNativeAndWrappedNativePair = (chainId = 1, fromToken?: Token, toT
 };
 
 export const convertToken = (token: Token) => {
-    return token.symbol === "ETH" ? WETH["1"] : new SDKToken(ChainId.MAINNET, token.address, token.decimals);
+    return token.symbol === "BNB" ? WETH["56"] : new SDKToken(ChainId.MAINNET, token.address, token.decimals);
 };
 
 export const convertAmount = (token: Token, amount: string) => {

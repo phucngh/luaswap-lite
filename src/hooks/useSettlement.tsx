@@ -167,7 +167,7 @@ export class Order {
         const domain = {
             name: "OrderBook",
             version: "1",
-            chainId: 42,
+            chainId: 56,
             verifyingContract: ORDER_BOOK
         };
         const types = {

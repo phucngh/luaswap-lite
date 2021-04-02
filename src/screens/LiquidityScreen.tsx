@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from "react";
 import { Platform, View } from "react-native";
 
-import { TokenAmount } from "@sushiswap/sdk";
+import { TokenAmount } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
 import AmountMeta from "../components/AmountMeta";

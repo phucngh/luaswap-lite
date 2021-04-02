@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { Percent, Router, Trade } from "@sushiswap/sdk";
+import { Percent, Router, Trade } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
 import { ROUTER } from "../constants/contracts";
 import Token from "../types/Token";
