@@ -139,8 +139,8 @@ export const EthersContextProvider = ({ children }) => {
                     // setENSName(ens2)
                     break
                 case 56: 
-                    let ens3 = await BSC_MAINET_PROVIDER.lookupAddress(address)
-                    setENSName(ens3)
+                    // let ens3 = await BSC_MAINET_PROVIDER.lookupAddress(address)
+                    // setENSName(ens3)
                     break
             }
         }
