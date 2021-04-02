@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { Pair } from "@sushiswap/sdk";
+import { Pair } from "@pancakeswap-libs/sdk";
 import { EthersContext } from "../context/EthersContext";
 import { convertToken, isNativeToken, parseBalance } from "../utils";
 import useDelayedOnBlockEffect from "./useDelayedOnBlockEffect";
