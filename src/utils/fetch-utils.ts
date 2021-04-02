@@ -1,5 +1,5 @@
-import { FACTORY_ADDRESS as SUSHISWAP_FACTORY, Pair } from "@sushiswap/sdk";
-import sushiData from "@sushiswap/sushi-data";
+import { FACTORY_ADDRESS as SUSHISWAP_FACTORY, Pair } from "@pancakeswap-libs/sdk";
+import luaData from "../../lua-data.js";
 import { FACTORY_ADDRESS as UNISWAP_FACTORY } from "@uniswap/sdk";
 import { ethers } from "ethers";
 import _ from "lodash";
@@ -58,6 +58,14 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             "symbol": "WBNB",
             "decimals": 18,
             "logoURI": "https://lite.sushi.com/images/tokens/BNB.png"
+            },
+            {
+            "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+            "chainId": 56,
+            "name": "BUSD Token",
+            "symbol": "BUSD",
+            "decimals": 18,
+            "logoURI": "https://lite.sushi.com/images/tokens/BNB.png"
             }
     ]
     }
@@ -69,7 +77,6 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
         account,
         tokens.map(token => token.address)
     );
-
     if (chainId == 56) {
         return [
             {
@@ -129,10 +136,10 @@ export const fetchTokenWithValue = async (
 
 // tslint:disable-next-line:max-func-body-length
 export const fetchPools = async (account: string, tokens: Token[], provider: ethers.providers.JsonRpcProvider) => {
-    const info = await sushiData.sushi.info();
-    const masterchefInfo = await sushiData.masterchef.info();
-    const pools = await sushiData.masterchef.pools();
-    const reduce = await sushiData.masterchef.pool({ poolId: "45" });
+    const info = await luaData.sushi.info();
+    const masterchefInfo = await luaData.masterchef.info();
+    const pools = await luaData.masterchef.pools();
+    const reduce = await luaData.masterchef.pool({ poolId: "45" });
     if (!reduce) return undefined;
     const sushiPerBlock = Math.floor(100 - 100 * (reduce.allocPoint / masterchefInfo.totalAllocPoint));
     const balances = await fetchTokenBalances(
@@ -186,7 +193,7 @@ export const fetchPools = async (account: string, tokens: Token[], provider: eth
 };
 
 export const fetchMyPools = async (account: string, tokens: Token[], provider: ethers.providers.JsonRpcProvider) => {
-    const pools = await sushiData.masterchef.pools();
+    const pools = await luaData.masterchef.pools();
     const fetchMyPool = async (pool): Promise<LPToken | null> => {
         try {
             const myStake = await fetchMyStake(pool.id, account, provider);
@@ -229,7 +236,7 @@ const calcSushiRewardedPerYear = (sushiPerBlock, allocPoint, totalAllocPoint, to
 };
 
 const fetchStakedValue = async (lpToken: string) => {
-    return await sushiData.masterchef.stakedValue({ lpToken });
+    return await luaData.masterchef.stakedValue({ lpToken });
 };
 
 const fetchMyStake = async (poolId: number, account: string, provider: ethers.providers.JsonRpcProvider) => {
@@ -408,7 +415,7 @@ export const fetchMyLimitOrders = async (
     tokens?: Token[],
     canceledHashes?: string[]
 ) => {
-    const orderBook = getContract("OrderBook", ORDER_BOOK, KOVAN_PROVIDER);
+    const orderBook = getContract("OrderBook", ORDER_BOOK, BSC_MAINET_PROVIDER);
     const settlement = await getContract("Settlement", SETTLEMENT, provider);
     const maker = await signer.getAddress();
     const length = await orderBook.numberOfHashesOfMaker(maker);

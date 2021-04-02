@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { Trade } from "@sushiswap/sdk";
+import { Trade } from "@pancakeswap-libs/sdk";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
 import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";

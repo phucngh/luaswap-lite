@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { ChainId, Currency, ETHER, Fetcher, Pair, Token, WETH } from "@sushiswap/sdk";
+import { ChainId, Currency, ETHER, Fetcher, Pair, Token, WETH } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
 
 const WBTC = new Token(ChainId.MAINNET, "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599", 8, "WBTC", "Wrapped BTC");
