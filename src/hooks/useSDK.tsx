@@ -36,8 +36,7 @@ const useSDK = () => {
     const getPair = useCallback(async (fromToken: Token, toToken: Token, provider: ethers.providers.BaseProvider) => {
         const from = convertToken(fromToken);
         const to = convertToken(toToken);
-        // console.log(fromToken, toToken)
-        console.log(provider)
+
         return await Fetcher.fetchPairData(from, to, provider);
     }, []);
     const calculateAmountOfLPTokenMinted = async (pair: Pair, fromAmount: TokenAmount, toAmount: TokenAmount) => {
