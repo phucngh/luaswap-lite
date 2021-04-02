@@ -8,7 +8,7 @@ const graphAPIEndpoints = {
 	bar: 'https://api.thegraph.com/subgraphs/name/sushiswap/sushi-bar',
 	timelock: 'https://api.thegraph.com/subgraphs/name/sushiswap/sushi-timelock',
 	maker: 'https://api.thegraph.com/subgraphs/name/sushiswap/sushi-maker',
-	blocklytics: 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks',
+	blocklytics: 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks',
 	exchange: 'https://api.thegraph.com/subgraphs/name/pancakeswap/exchange'
 };
 
@@ -77,7 +77,7 @@ module.exports = {
 						orderBy: 'number',
 						orderDirection: 'desc',
 						where: {
-							number_gt: 11370252
+							number_gt: 5100000
 						}
 					},
 					properties: [
