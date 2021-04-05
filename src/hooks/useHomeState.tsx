@@ -21,35 +21,35 @@ const useHomeState = () => {
     const { provider, signer, address, tokens } = useContext(EthersContext);
     const [lpTokens, setLPTokens] = useState<LPTokenWithValue[]>();
     const [pools, setPools] = useState<LPTokenWithValue[]>();
-    const [loadingLPTokens, setLoadingLPTokens] = useState(true);
+    // const [loadingLPTokens, setLoadingLPTokens] = useState(true);
     const [loadingPools, setLoadingPools] = useState(true);
     const { getPair } = useSDK();
 
     useEffect(() => {
         setLPTokens(undefined);
         setPools(undefined);
-        setLoadingLPTokens(true);
+        // setLoadingLPTokens(true);
         setLoadingPools(true);
     }, [address]);
 
     // Load Liquidity
-    useAsyncEffect(async () => {
-        const weth = tokens.find(t => isWrappedNativeToken(t));
-        if (provider && signer && weth && tokens && tokens.length > 0) {
-            setLoadingLPTokens(true);
-            const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
-            const fetched = await fetchMyLPTokens(await signer.getAddress(), tokens, provider);
-            try {
-                setLPTokens(
-                    await Promise.all(
-                        fetched.map(lpToken => fetchLPTokenWithValue(lpToken, weth, wethPriceUSD, getPair, provider))
-                    )
-                );
-            } finally {
-                setLoadingLPTokens(false);
-            }
-        }
-    }, [getPair, provider, signer, tokens]);
+    // useAsyncEffect(async () => {
+    //     const weth = tokens.find(t => isWrappedNativeToken(t));
+    //     if (provider && signer && weth && tokens && tokens.length > 0) {
+    //         setLoadingLPTokens(true);
+    //         const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
+    //         const fetched = await fetchMyLPTokens(await signer.getAddress(), tokens, provider);
+    //         try {
+    //             setLPTokens(
+    //                 await Promise.all(
+    //                     fetched.map(lpToken => fetchLPTokenWithValue(lpToken, weth, wethPriceUSD, getPair, provider))
+    //                 )
+    //             );
+    //         } finally {
+    //             setLoadingLPTokens(false);
+    //         }
+    //     }
+    // }, [getPair, provider, signer, tokens]);
 
     // Load Farming
     useAsyncEffect(async () => {
@@ -71,7 +71,7 @@ const useHomeState = () => {
     }, [getPair, provider, signer, tokens, lpTokens]);
 
     return {
-        loadingLPTokens,
+        // loadingLPTokens,
         loadingPools,
         tokens,
         lpTokens,
