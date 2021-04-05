@@ -80,18 +80,7 @@ export const EthersContextProvider = ({ children }) => {
         if (ethereum) {
             const web3 = new ethers.providers.Web3Provider(ethereum);
             const web3Signer = await web3.getSigner();
-            switch (chainId) {
-                case 1: 
-                    setProvider(ethereum.isMetaMask ? web3Signer.provider : ALCHEMY_PROVIDER)
-                    break
-                case 88: 
-                    setProvider(ethereum.isMetaMask ? web3Signer.provider : TOMOCHAIN_MAINET_PROVIDER)
-                    break
-                case 56: 
-                    setProvider(ethereum.isMetaMask ? web3Signer.provider : BSC_MAINET_PROVIDER)
-                    break
-            }
-                
+            setProvider(ethereum.isMetaMask ? web3Signer.provider : BSC_MAINET_PROVIDER)
             setSigner(web3Signer);
         }
     }, [ethereum, chainId]);
@@ -146,23 +135,10 @@ export const EthersContextProvider = ({ children }) => {
         }
     }, [provider, address]);
 
-    const getProvider = () => {
-        switch (chainId) {
-            case 1: 
-                return ALCHEMY_PROVIDER
-            case 88: 
-                return TOMOCHAIN_MAINET_PROVIDER
-            case 56: 
-                return BSC_MAINET_PROVIDER
-            default:
-                return ALCHEMY_PROVIDER
-        }
-    }
-
     const updateTokens = async () => {
-        if (address && chainId && customTokens) {
+        if (address && chainId === 56 && customTokens) {
             try {
-                const p = getProvider();
+                const p = BSC_MAINET_PROVIDER;
                 const list = await fetchTokens(p, address, customTokens);
                 const weth = list.find(t => isWrappedNativeToken(t, chainId));
                 if (list?.length > 0 && weth && p) {
@@ -184,7 +160,7 @@ export const EthersContextProvider = ({ children }) => {
     }, []);
 
     useAsyncEffect(async () => {
-        if (address && chainId && customTokens) {
+        if (address && chainId === 56 && customTokens) {
             setLoadingTokens(true);
             await updateTokens();
         }

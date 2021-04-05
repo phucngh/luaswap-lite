@@ -69,7 +69,6 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             }
     ]
     }
-    const chainId = (await provider.getNetwork()).chainId
     const tokens = [...json.tokens, ...(customTokens || [])]
 
     const balances = await fetchTokenBalances(
@@ -77,29 +76,16 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
         account,
         tokens.map(token => token.address)
     );
-    if (chainId == 56) {
-        return [
-            {
-                ...BNB,
-                balance: await provider.getBalance(account)
-            },
-            ...tokens.map((token, i) => ({
-                ...token,
-                balance: ethers.BigNumber.from(balances[i] || 0)
-            }))
-        ];
-    } else {
-        return [
-            {
-                ...ETH,
-                balance: await provider.getBalance(account)
-            },
-            ...tokens.map((token, i) => ({
-                ...token,
-                balance: ethers.BigNumber.from(balances[i] || 0)
-            }))
-        ];
-    }
+    return [
+        {
+            ...BNB,
+            balance: await provider.getBalance(account)
+        },
+        ...tokens.map((token, i) => ({
+            ...token,
+            balance: ethers.BigNumber.from(balances[i] || 0)
+        }))
+    ];
 };
 
 export const fetchTokenWithValue = async (

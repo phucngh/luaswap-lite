@@ -60,8 +60,8 @@ const SwapScreen = () => {
 
 const Swap = () => {
     const { chainId } = useContext(EthersContext);
+    if (chainId !== 56) return <ChangeNetwork />;
     const state = useSwapState();
-    if (chainId !== 88 && chainId !== 56) return <ChangeNetwork />;
     return (
         <View style={{ marginTop: Spacing.large }}>
             <OrderTypeSelect state={state} />
@@ -487,7 +487,7 @@ const PlaceOrderButton = ({
             onError(e);
         }
     }, [state.onCreateOrder, goToLimitOrders, onError]);
-    if (!disabled && (chainId !== 88 && chainId !== 56)) return <ChangeNetwork chainId={56} />;
+    if (!disabled && (chainId !== 56)) return <ChangeNetwork chainId={56} />;
     return (
         <Button title={t("place-limit-order")} disabled={disabled} loading={state.creatingOrder} onPress={onPress} />
     );

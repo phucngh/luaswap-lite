@@ -55,9 +55,9 @@ const HarvestScreen = () => {
 
 const Harvest = () => {
     const { chainId } = useContext(EthersContext);
+    if (chainId !== 56) return <ChangeNetwork />;
     const t = useTranslation();
     const state = useFarmingState(true);
-    if (chainId !== 1) return <ChangeNetwork />;
     return (
         <View style={{ marginTop: Spacing.large }}>
             <LPTokenSelect

@@ -4,6 +4,7 @@ import { Icon } from "react-native-elements";
 
 import { ethers } from "ethers";
 import BackgroundImage from "../components/BackgroundImage";
+import ChangeNetwork from "../components/ChangeNetwork";
 import Border from "../components/Border";
 import Container from "../components/Container";
 import Content from "../components/Content";
@@ -41,6 +42,9 @@ interface LPTokenItemProps {
 }
 
 const HomeScreen = () => {
+    const { chainId } = useContext(EthersContext);
+    if (chainId !== 56) return <ChangeNetwork />;
+    
     const t = useTranslation();
     const state = useHomeState();
     const { loadingTokens } = useContext(EthersContext);

@@ -54,8 +54,8 @@ const MyLimitOrdersScreen = () => {
 
 const MyLimitOrders = () => {
     const { chainId } = useContext(EthersContext);
+    if (chainId !== 56) return <ChangeNetwork />;
     const state = useMyLimitOrdersState();
-    if (chainId !== 88 && chainId !== 56) return <ChangeNetwork />;
     return (
         <View style={{ marginTop: Spacing.large }}>
             <OrderSelect state={state} />

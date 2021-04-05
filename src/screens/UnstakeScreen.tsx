@@ -47,9 +47,9 @@ const UnstakeScreen = () => {
 
 const Staking = () => {
     const { chainId } = useContext(EthersContext);
+    if (chainId !== 56) return <ChangeNetwork />;
     const t = useTranslation();
     const state = useStakingState();
-    if (chainId !== 1) return <ChangeNetwork />;
     return (
         <View style={{ marginTop: Spacing.large }}>
             <XSushiBalance state={state} />

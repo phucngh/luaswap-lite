@@ -51,7 +51,7 @@ export const isNativeToken = (token?: Token) => {
     return token?.address.toLowerCase() === ETH.address.toLowerCase();
 }
 
-export const isWrappedNativeToken = (token?: Token, chainId = 1) => {
+export const isWrappedNativeToken = (token?: Token, chainId = 56) => {
     if (chainId === 56) {
         return token?.address.toLowerCase() === WBNB[56].address.toLowerCase();
     } else {
@@ -59,7 +59,7 @@ export const isWrappedNativeToken = (token?: Token, chainId = 1) => {
     }
 }
 
-export const isNativeAndWrappedNativePair = (chainId = 1, fromToken?: Token, toToken?: Token) => {
+export const isNativeAndWrappedNativePair = (chainId = 56, fromToken?: Token, toToken?: Token) => {
     return (isNativeToken(fromToken) && isWrappedNativeToken(toToken, chainId)) || (isWrappedNativeToken(fromToken, chainId) && isNativeToken(toToken));
 };
 
