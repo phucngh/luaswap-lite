@@ -96,8 +96,7 @@ export const fetchTokenWithValue = async (
     provider: ethers.providers.BaseProvider
 ) => {
     let fetched: TokenWithValue;
-    const chainId = (await provider.getNetwork()).chainId
-    if (isNativeToken(token) || isWrappedNativeToken(token, chainId)) {
+    if (isNativeToken(token) || isWrappedNativeToken(token)) {
         fetched = {
             ...token,
             priceUSD: Number(wethPriceUSD.toString()),

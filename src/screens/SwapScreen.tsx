@@ -221,9 +221,9 @@ const NoPairNotice = ({ state }: { state: SwapState }) => {
 };
 
 const TradeInfo = ({ state }: { state: SwapState }) => {
-    const { chainId } = useContext(EthersContext);
+    /* const { chainId } = useContext(EthersContext); */
     const t = useTranslation();
-    if (isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken)) return <WrapInfo state={state} />;
+    if (isNativeAndWrappedNativePair(state.fromToken, state.toToken)) return <WrapInfo state={state} />;
     const disabled =
         state.fromSymbol === "" ||
         state.toSymbol === "" ||
@@ -236,7 +236,7 @@ const TradeInfo = ({ state }: { state: SwapState }) => {
             {state.orderType === "limit" ? (
                 <>
                     <LimitOrderInfo state={state} />
-                    {chainId === 42 && (
+                    {/* {chainId === 42 && (
                         <Notice
                             text={t("get-free-keth-here")}
                             buttonText={t("get-keth")}
@@ -244,7 +244,7 @@ const TradeInfo = ({ state }: { state: SwapState }) => {
                             color={"orange"}
                             style={{ marginTop: Spacing.small }}
                         />
-                    )}
+                    )} */}
                 </>
             ) : (
                 <SwapInfo state={state} disabled={disabled} />
@@ -288,7 +288,6 @@ const SwapInfo = ({ state, disabled }: { state: SwapState; disabled: boolean }) 
 
 // tslint:disable-next-line:max-func-body-length
 const SwapControls = ({ state }: { state: SwapState }) => {
-    const { chainId } = useContext(EthersContext);
     const [error, setError] = useState<MetamaskError>({});
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
     const approveRequired = !isNativeToken(state.fromToken) && !state.fromTokenAllowed;
@@ -301,9 +300,9 @@ const SwapControls = ({ state }: { state: SwapState }) => {
                 <SwapButton state={state} onError={setError} disabled={true} />
             ) : parseBalance(state.fromAmount, state.fromToken.decimals).gt(state.fromToken.balance) ? (
                 <InsufficientBalanceButton symbol={state.fromSymbol} />
-            ) : isWrappedNativeToken(state.fromToken, chainId) && isNativeToken(state.toToken) ? (
+            ) : isWrappedNativeToken(state.fromToken) && isNativeToken(state.toToken) ? (
                 <UnwrapButton state={state} onError={setError} />
-            ) : isNativeToken(state.fromToken) && isWrappedNativeToken(state.toToken, chainId) ? (
+            ) : isNativeToken(state.fromToken) && isWrappedNativeToken(state.toToken) ? (
                 <WrapButton state={state} onError={setError} />
             ) : state.unsupported ? (
                 <UnsupportedButton state={state} />
@@ -388,27 +387,15 @@ const LimitOrderInfo = ({ state }: { state: SwapState }) => {
 
 // tslint:disable-next-line:max-func-body-length
 const LimitOrderControls = ({ state }: { state: SwapState }) => {
-    const { address, chainId, provider } = useContext(EthersContext);
+    const { address, chainId } = useContext(EthersContext);
     const [error, setError] = useState<MetamaskError>({});
     const [allowed, setAllowed] = useState<boolean>();
-    const getProvider = () => {
-        switch (chainId) {
-            case 1: 
-                return ALCHEMY_PROVIDER
-            case 88: 
-                return TOMOCHAIN_MAINET_PROVIDER
-            case 56: 
-                return BSC_MAINET_PROVIDER
-            default:
-                return ALCHEMY_PROVIDER
-        }
-    };
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
     useDelayedEffect(
         async () => {
             if (state.fromToken && !isEmptyValue(state.fromAmount)) {
                 const fromAmount = parseBalance(state.fromAmount, state.fromToken.decimals);
-                const erc20 = getContract("ERC20", state.fromToken.address, getProvider());
+                const erc20 = getContract("ERC20", state.fromToken.address, BSC_MAINET_PROVIDER);
                 const allowance = await erc20.allowance(address, SETTLEMENT);
                 setAllowed(ethers.BigNumber.from(allowance).gte(fromAmount));
             }

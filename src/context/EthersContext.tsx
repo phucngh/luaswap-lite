@@ -140,7 +140,7 @@ export const EthersContextProvider = ({ children }) => {
             try {
                 const p = BSC_MAINET_PROVIDER;
                 const list = await fetchTokens(p, address, customTokens);
-                const weth = list.find(t => isWrappedNativeToken(t, chainId));
+                const weth = list.find(t => isWrappedNativeToken(t));
                 if (list?.length > 0 && weth && p) {
                     const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
                     setTokens(

@@ -102,10 +102,10 @@ const useRemoveLiquidityState: () => RemoveLiquidityState = () => {
             const fromAmount = parseBalance(state.fromAmount, state.fromToken!.decimals);
             const toAmount = parseBalance(state.toAmount, state.toToken!.decimals);
             const liquidity = parseBalance(state.amount, state.selectedLPToken.decimals);
-            if (isWrappedNativeToken(state.fromToken, chainId) || isWrappedNativeToken(state.toToken, chainId)) {
-                const token = isWrappedNativeToken(state.fromToken, chainId) ? state.toToken! : state.fromToken!;
-                const amountToRemove = isWrappedNativeToken(state.fromToken, chainId) ? toAmount : fromAmount;
-                const amountToRemoveETH = isWrappedNativeToken(state.fromToken, chainId) ? fromAmount : toAmount;
+            if (isWrappedNativeToken(state.fromToken) || isWrappedNativeToken(state.toToken)) {
+                const token = isWrappedNativeToken(state.fromToken) ? state.toToken! : state.fromToken!;
+                const amountToRemove = isWrappedNativeToken(state.fromToken) ? toAmount : fromAmount;
+                const amountToRemoveETH = isWrappedNativeToken(state.fromToken) ? fromAmount : toAmount;
                 const tx = await removeLiquidityETH(token, liquidity, amountToRemove, amountToRemoveETH, signer);
                 await tx.wait();
             } else {

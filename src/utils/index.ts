@@ -1,8 +1,7 @@
 import { ChainId, CurrencyAmount, Percent, Token as SDKToken, TokenAmount, WETH } from "@pancakeswap-libs/sdk";
-import { WETH as WTOMO } from "@luaswap/sdk"; 
 import { WETH as WBNB } from "@pancakeswap-libs/sdk";
 import { ethers } from "ethers";
-import { ETH } from "../constants/tokens";
+import { BNB } from "../constants/tokens";
 import Token from "../types/Token";
 import getContract from "./getContract";
 
@@ -48,19 +47,15 @@ export const isEmptyValue = (text: string) =>
         : text === "" || text.replace(/0/g, "").replace(/\./, "") === "";
 
 export const isNativeToken = (token?: Token) => {
-    return token?.address.toLowerCase() === ETH.address.toLowerCase();
+    return token?.address.toLowerCase() === BNB.address.toLowerCase();
 }
 
-export const isWrappedNativeToken = (token?: Token, chainId = 56) => {
-    if (chainId === 56) {
-        return token?.address.toLowerCase() === WBNB[56].address.toLowerCase();
-    } else {
-        return token?.address.toLowerCase() === WETH[1].address.toLowerCase();
-    }
+export const isWrappedNativeToken = (token?: Token) => {
+    return token?.address.toLowerCase() === WBNB[56].address.toLowerCase();
 }
 
-export const isNativeAndWrappedNativePair = (chainId = 56, fromToken?: Token, toToken?: Token) => {
-    return (isNativeToken(fromToken) && isWrappedNativeToken(toToken, chainId)) || (isWrappedNativeToken(fromToken, chainId) && isNativeToken(toToken));
+export const isNativeAndWrappedNativePair = (fromToken?: Token, toToken?: Token) => {
+    return (isNativeToken(fromToken) && isWrappedNativeToken(toToken)) || (isWrappedNativeToken(fromToken) && isNativeToken(toToken));
 };
 
 export const convertToken = (token: Token) => {

@@ -205,7 +205,6 @@ const PriceInfo = ({ state }: { state: AddLiquidityState }) => {
 };
 
 const FirstProviderInfo = ({ state }: { state: AddLiquidityState }) => {
-    const { chainId } = useContext(EthersContext)
     const t = useTranslation();
     const { red, green } = useColors();
     const noAmount = isEmptyValue(state.fromAmount) || isEmptyValue(state.toAmount);
@@ -222,7 +221,7 @@ const FirstProviderInfo = ({ state }: { state: AddLiquidityState }) => {
                 <FirstProviderControls state={state} />
             </InfoBox>
             {/*)}*/}
-            {!isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken) && (
+            {!isNativeAndWrappedNativePair(state.fromToken, state.toToken) && (
                 <Notice
                     text={
                         t("first-provider-desc-1") +
@@ -238,7 +237,6 @@ const FirstProviderInfo = ({ state }: { state: AddLiquidityState }) => {
 
 // tslint:disable-next-line:max-func-body-length
 const FirstProviderControls = ({ state }: { state: AddLiquidityState }) => {
-    const { chainId } = useContext(EthersContext)
     const [error, setError] = useState<MetamaskError>({});
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
     const fromApproveRequired = !isNativeToken(state.fromToken) && !state.fromTokenAllowed;
@@ -247,7 +245,7 @@ const FirstProviderControls = ({ state }: { state: AddLiquidityState }) => {
         fromApproveRequired || isEmptyValue(state.fromAmount) || toApproveRequired || isEmptyValue(state.toAmount);
     return (
         <View style={{ marginTop: Spacing.normal }}>
-            {isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken) ? (
+            {isNativeAndWrappedNativePair(state.fromToken, state.toToken) ? (
                 <UnsupportedButton state={state} />
             ) : !state.fromToken || !state.toToken || isEmptyValue(state.fromAmount) || isEmptyValue(state.toAmount) ? (
                 <SupplyButton state={state} onError={setError} disabled={true} />
@@ -349,7 +347,6 @@ const PriceMeta = ({ state, price, disabled }) => {
 
 // tslint:disable-next-line:max-func-body-length
 const Controls = ({ state }: { state: AddLiquidityState }) => {
-    const { chainId } = useContext(EthersContext)
     const [error, setError] = useState<MetamaskError>({});
     const { allowed, setAllowed, loading } = useZapTokenAllowance(state.fromToken);
     useAsyncEffect(() => setError({}), [state.fromSymbol, state.toSymbol, state.fromAmount]);
@@ -365,7 +362,7 @@ const Controls = ({ state }: { state: AddLiquidityState }) => {
             isEmptyValue(state.toAmount) /*))*/;
     return (
         <View style={{ marginTop: Spacing.normal }}>
-            {isNativeAndWrappedNativePair(chainId, state.fromToken, state.toToken) ? (
+            {isNativeAndWrappedNativePair(state.fromToken, state.toToken) ? (
                 <UnsupportedButton state={state} />
             ) : !state.fromToken || !state.toToken || isEmptyValue(state.fromAmount) || isEmptyValue(state.toAmount) ? (
                 <SupplyButton state={state} onError={setError} disabled={true} />
