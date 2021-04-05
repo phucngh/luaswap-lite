@@ -29,7 +29,7 @@ export const KOVAN_PROVIDER = new ethers.providers.AlchemyProvider(
 
 export const TOMOCHAIN_MAINET_PROVIDER = new ethers.providers.JsonRpcProvider('https://rpc.tomochain.com', 88);
 export const TOMOCHAIN_TESTNET_PROVIDER = new ethers.providers.JsonRpcProvider('https://rpc.testnet.tomochain.com', 89);
-export const BSC_MAINET_PROVIDER = new ethers.providers.JsonRpcProvider('https://bsc-dataseed1.ninicoin.io', 56);
+export const BSC_MAINET_PROVIDER = new ethers.providers.JsonRpcProvider('https://bsc-dataseed.binance.org', 56);
 
 export const EthersContext = React.createContext({
     ethereum: undefined as Ethereum | undefined,
