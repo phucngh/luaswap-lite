@@ -21,7 +21,7 @@ const useHomeState = () => {
     const { provider, signer, address, tokens } = useContext(EthersContext);
     const [lpTokens, setLPTokens] = useState<LPTokenWithValue[]>();
     const [pools, setPools] = useState<LPTokenWithValue[]>();
-    // const [loadingLPTokens, setLoadingLPTokens] = useState(true);
+    const [loadingLPTokens, setLoadingLPTokens] = useState(true);
     const [loadingPools, setLoadingPools] = useState(true);
     const { getPair } = useSDK();
 
@@ -29,10 +29,12 @@ const useHomeState = () => {
         setLPTokens(undefined);
         setPools(undefined);
         // setLoadingLPTokens(true);
-        setLoadingPools(true);
+        setLoadingLPTokens(false);
+        // setLoadingPools(true);
+        setLoadingPools(false);
     }, [address]);
 
-    // Load Liquidity
+    // // Load Liquidity
     // useAsyncEffect(async () => {
     //     const weth = tokens.find(t => isWrappedNativeToken(t));
     //     if (provider && signer && weth && tokens && tokens.length > 0) {
@@ -51,27 +53,27 @@ const useHomeState = () => {
     //     }
     // }, [getPair, provider, signer, tokens]);
 
-    // Load Farming
-    useAsyncEffect(async () => {
-        const weth = tokens.find(t => isWrappedNativeToken(t));
-        if (provider && signer && weth && tokens && tokens.length > 0 && lpTokens) {
-            setLoadingPools(true);
-            const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
-            const fetched = await fetchMyPools(await signer.getAddress(), tokens, provider);
-            try {
-                setPools(
-                    await Promise.all(
-                        fetched.map(lpToken => fetchLPTokenWithValue(lpToken, weth, wethPriceUSD, getPair, provider))
-                    )
-                );
-            } finally {
-                setLoadingPools(false);
-            }
-        }
-    }, [getPair, provider, signer, tokens, lpTokens]);
+    // // Load Farming
+    // useAsyncEffect(async () => {
+    //     const weth = tokens.find(t => isWrappedNativeToken(t));
+    //     if (provider && signer && weth && tokens && tokens.length > 0 && lpTokens) {
+    //         setLoadingPools(true);
+    //         const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
+    //         const fetched = await fetchMyPools(await signer.getAddress(), tokens, provider);
+    //         try {
+    //             setPools(
+    //                 await Promise.all(
+    //                     fetched.map(lpToken => fetchLPTokenWithValue(lpToken, weth, wethPriceUSD, getPair, provider))
+    //                 )
+    //             );
+    //         } finally {
+    //             setLoadingPools(false);
+    //         }
+    //     }
+    // }, [getPair, provider, signer, tokens, lpTokens]);
 
     return {
-        // loadingLPTokens,
+        loadingLPTokens,
         loadingPools,
         tokens,
         lpTokens,

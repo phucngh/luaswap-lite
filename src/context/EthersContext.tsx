@@ -7,7 +7,7 @@ import luaData from "../../lua-data.js";
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
-import { ETH } from "../constants/tokens";
+import { BNB } from "../constants/tokens";
 import useSDK from "../hooks/useSDK";
 import Ethereum from "../types/Ethereum";
 import Token from "../types/Token";
@@ -41,10 +41,10 @@ export const EthersContext = React.createContext({
     ensName: null as string | null,
     addOnBlockListener: (_name: string, _listener: OnBlockListener) => {},
     removeOnBlockListener: (_name: string) => {},
-    tokens: [ETH] as TokenWithValue[],
+    tokens: [BNB] as TokenWithValue[],
     updateTokens: async () => {},
     loadingTokens: false,
-    customTokens: [ETH] as Token[],
+    customTokens: [BNB] as Token[],
     addCustomToken: (_token: Token) => {},
     removeCustomToken: (_token: Token) => {},
     approveToken: async (_token: string, _spender: string, _amount?: ethers.BigNumber) => {
