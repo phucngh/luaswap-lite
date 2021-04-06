@@ -57,7 +57,9 @@ const useSettlement = () => {
     const queryOrderFilledEvents = useCallback(async (hash: string, signer: ethers.Signer) => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderFilled(hash);
-        return await settlement.queryFilter(filter);
+        // @ts-ignore
+        const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
+        return await settlement.queryFilter(filter, fromBlock);
     }, []);
 
     const calculateLimitOrderFee = (fromAmount: ethers.BigNumber) => {
