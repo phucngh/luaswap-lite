@@ -32,6 +32,7 @@ const useMyLimitOrdersState = () => {
         if (provider && signer && address && tokens) {
             setLoading(true);
             try {
+                console.log('111')
                 const canceledHashes = (await queryOrderCanceledEvents(signer)).map(event => event.args![0] as string);
                 const orders = await fetchMyLimitOrders(provider, signer, tokens, canceledHashes);
                 setMyOrders(orders);

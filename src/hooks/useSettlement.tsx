@@ -49,7 +49,9 @@ const useSettlement = () => {
     const queryOrderCanceledEvents = useCallback(async (signer: ethers.Signer) => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderCanceled(null);
-        return await settlement.queryFilter(filter);
+        // @ts-ignore
+        const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
+        return await settlement.queryFilter(filter,fromBlock);
     }, []);
 
     const queryOrderFilledEvents = useCallback(async (hash: string, signer: ethers.Signer) => {
