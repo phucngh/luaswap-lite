@@ -54,10 +54,6 @@ const useSwapState: () => SwapState = () => {
 
     const getProvider = () => {
         switch (chainId) {
-            case 1: 
-                return ALCHEMY_PROVIDER
-            case 88: 
-                return TOMOCHAIN_MAINET_PROVIDER
             case 56: 
                 return BSC_MAINET_PROVIDER
             default:
