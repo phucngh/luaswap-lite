@@ -152,7 +152,8 @@ const useSwapRouter = () => {
     );
 
     const calculateSwapFee = (fromAmount: ethers.BigNumber) => {
-        return fromAmount.mul(3).div(1000);
+        // return fromAmount.mul(3).div(1000); // fee for sushiswap on ethereum
+        return fromAmount.mul(2).div(1000); // fee for pancakeswap on bsc
     };
 
     return {

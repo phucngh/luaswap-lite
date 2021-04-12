@@ -108,11 +108,11 @@ export const EthersContextProvider = ({ children }) => {
             ethereum.on("accountsChanged", onAccountsChanged);
             ethereum.on("chainChanged", onChainChanged);
             ethereum.on("disconnect", onDisconnect);
-            return () => {
-                ethereum.off("accountsChanged", onAccountsChanged);
-                ethereum.off("chainChanged", onAccountsChanged);
-                ethereum.off("disconnect", onDisconnect);
-            };
+            // return () => {
+            //     ethereum.off("accountsChanged", onAccountsChanged);
+            //     ethereum.off("chainChanged", onAccountsChanged);
+            //     ethereum.off("disconnect", onDisconnect);
+            // };
         }
     }, [ethereum]);
 
