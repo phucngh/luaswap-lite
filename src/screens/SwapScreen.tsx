@@ -11,6 +11,7 @@ import Button from "../components/Button";
 import ChangeNetwork from "../components/ChangeNetwork";
 import Container from "../components/Container";
 import Content from "../components/Content";
+import SwapContainer from "../components/SwapContainer";
 import ErrorMessage from "../components/ErrorMessage";
 import FetchingButton from "../components/FetchingButton";
 import Heading from "../components/Heading";
@@ -39,6 +40,7 @@ import MetamaskError from "../types/MetamaskError";
 import Token from "../types/Token";
 import { getContract, isEmptyValue, isNativeToken, isNativeAndWrappedNativePair, isWrappedNativeToken, parseBalance } from "../utils";
 import Screen from "./Screen";
+import MyLimitOrdersScreen from "./MyLimitOrdersScreen";
 
 const SwapScreen = () => {
     const t = useTranslation();
@@ -46,14 +48,20 @@ const SwapScreen = () => {
         <Screen>
             <Container>
                 <BackgroundImage />
-                <Content>
-                    <Title text={t("new-order")} />
-                    <Text light={true}>{t("new-order-desc")}</Text>
-                    <Swap />
-                </Content>
+                <SwapContainer>
+                    {/* <Title text={t("new-order")} />
+                    <Text light={true}>{t("new-order-desc")}</Text> */}
+                    <View style={{ width: '40%' }}>
+                        <Swap />
+                    </View>
+                    
+                    <View style={{ width: '60%', paddingLeft: '40px', paddingRight: '40px' }}>
+                        <MyLimitOrdersScreen/>
+                    </View>
+                </SwapContainer>
                 {Platform.OS === "web" && <WebFooter />}
             </Container>
-            <SwapSubMenu />
+            {/* <SwapSubMenu /> */}
         </Screen>
     );
 };
@@ -464,7 +472,8 @@ const PlaceOrderButton = ({
 }) => {
     const { chainId } = useContext(EthersContext);
     const t = useTranslation();
-    const goToLimitOrders = useLinker("/swap/my-orders", "LimitOrders");
+    // const goToLimitOrders = useLinker("/swap/my-orders", "LimitOrders");
+    const goToLimitOrders = () => window.location.reload(); 
     const onPress = useCallback(async () => {
         onError({});
         try {

@@ -64,6 +64,7 @@
     "@babel/core": "^7.8.6",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
+    "@types/react-native-table-component": "^1.2.0",
     "@types/react-router-dom": "^5.1.5",
     "babel-plugin-inline-dotenv": "^1.6.0",
     "gh-pages": "^3.1.0",

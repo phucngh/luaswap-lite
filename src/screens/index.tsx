@@ -44,9 +44,9 @@ const WebScreens = () => {
             <View style={{ flex: 1, backgroundColor: background }}>
                 <Suspense fallback={<EmptyScreen />}>
                     <Switch>
-                        <Route path={"/swap/my-orders"}>
+                        {/* <Route path={"/swap/my-orders"}>
                             <MyLimitOrdersScreen />
-                        </Route>
+                        </Route> */}
                         <Route path={"/swap"}>
                             <SwapScreen />
                         </Route>

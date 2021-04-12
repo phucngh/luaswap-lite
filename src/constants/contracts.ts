@@ -10,5 +10,5 @@ export const SUSHI_ROLL = "0x16E58463eb9792Bc236d8860F5BC69A81E26E32B";
 export const LP_TOKEN_SCANNER = "0xD132Ce8eA8865348Ac25E416d95ab1Ba84D216AF";
 export const ZAP_IN = "0xfF350eDc2242Ca4d7252A64746aec4A5487a852B";
 export const ZAP_OUT = "0xf12CAB7Acaa14Eed3bEa82199ea2f5c2C2194B81";
-export const ORDER_BOOK = "0xe06F7B2EC67659813c8Ab1320215e318b7E9e280";//OrderBook.address;
-export const SETTLEMENT = "0x778b1C825D333c6b504dCe2be663c7B3831aeFAf";//Settlement.address;
+export const ORDER_BOOK = "0x6Ee3a19e3b315Ff6a51E72a5AcAB1aAbc9cbab12";//OrderBook.address;
+export const SETTLEMENT = "0x9610953354A70ab4A269a9a73FC0b9aD89268c14";//Settlement.address;
