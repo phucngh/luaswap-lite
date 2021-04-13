@@ -55,10 +55,11 @@ const MyLimitOrdersScreen = () => {
 
 const MyLimitOrders = () => {
     const { chainId } = useContext(EthersContext);
+    const {border} = useColors()
     if (chainId !== 56) return <ChangeNetwork />;
     const state = useMyLimitOrdersState();
     return (
-        <View style={{ marginTop: Spacing.large }}>
+        <View style={{borderStyle: 'solid', borderWidth: 1 ,borderColor:border, padding: 30, borderRadius: 10}}>
             <OrderSelect state={state} />
             <OrderInfo state={state} />
         </View>
@@ -67,11 +68,10 @@ const MyLimitOrders = () => {
 
 const OrderSelect = (props: { state: MyLimitOrdersState }) => {
     const t = useTranslation();
-    // console.log(props.state)
     return (
         <View>
             <Expandable
-                title={t("limit-orders")}
+                title={t("my-orders")}
                 expanded={!props.state.selectedOrder}
                 onExpand={() => props.state.setSelectedOrder()}>
                 <OrderList state={props.state} />
@@ -120,6 +120,8 @@ const EmptyList = () => {
 const OrderItem = (props: { order: Order; selected: boolean; onSelectOrder: (order: Order) => void }) => {
     const t = useTranslation();
     const { amountIn, amountOutMin, fromToken, toToken } = props.order;
+    const pair = props.order
+    console.log(props.order)
     const status = props.order.status();
     const disabled = status !== "Open";
     const price = Fraction.fromTokens(amountOutMin, amountIn, toToken, fromToken);
@@ -134,8 +136,8 @@ const OrderItem = (props: { order: Order; selected: boolean; onSelectOrder: (ord
             containerStyle={{
                 marginBottom: ITEM_SEPARATOR_HEIGHT
             }}>
-            <FlexView style={{ alignItems: "center" }}>
-                <View>
+            {/* <FlexView style={{ alignItems: "center" }}> */}
+                {/* <View> */}
                     {/* <table style={{width: '100%'}}>
                         <tr>
                             <th style={{textAlign: 'left'}}><Text style={{ color: disabled ? colorDisabled : '#fff' }}>Pair</Text></th>
@@ -148,18 +150,53 @@ const OrderItem = (props: { order: Order; selected: boolean; onSelectOrder: (ord
                             <td><Text style={{ color: disabled ? colorDisabled : '#fff' }}>{props.order.canceled ? t("canceled") : price.toString(8) + ' ' + toToken.symbol + '/' + fromToken.symbol}</Text></td>
                         </tr>
                     </table> */}
-                    <Token token={fromToken} amount={amountIn} disabled={disabled} buy={false} />
-                    <View style={{ height: Spacing.tiny }} />
-                    <Token token={toToken} amount={amountOutMin} disabled={disabled} buy={true} />
-                </View>
-                <Field
+                    <PairToken pair={pair} disabled={disabled}/>
+                    {/* <Token token={fromToken} amount={amountIn} disabled={disabled} buy={false} /> */}
+                    {/* <View style={{ height: Spacing.tiny }} /> */}
+                    {/* <Token token={toToken} amount={amountOutMin} disabled={disabled} buy={true} /> */}
+                {/* </View> */}
+                {/* <Field
                     label={t("price")}
                     value={props.order.canceled ? t("canceled") : price.toString(8)}
                     disabled={disabled}
                     minWidth={0}
-                />
-            </FlexView>
+                /> */}
+            {/* </FlexView> */}
         </Selectable>
+    );
+};
+
+const PairToken = ({ pair, disabled }) => {
+    const { green, red, disabled: colorDisabled } = useColors()
+    const t = useTranslation()
+    const { amountIn, amountOutMin, fromToken, toToken } = pair
+    const price = Fraction.fromTokens(amountOutMin, amountIn, toToken, fromToken)
+    console.log(formatBalance(amountIn || fromToken.balance, fromToken.decimals, 8), price)
+    return (
+        <FlexView style={{ alignItems: "center", justifyContent: 'space-between' }}>
+            <FlexView style={{paddingRight: 10}}>
+                <TokenLogo small={true} token={fromToken} disabled={disabled} />
+                <TokenLogo small={true} token={toToken} disabled={disabled} />
+            </FlexView>
+            <FlexView>
+                <Text disabled={disabled}>{fromToken.symbol}</Text>
+                <Text style={{ color: disabled ? colorDisabled : '#fff', paddingLeft: 3, paddingRight: 3 }}>/</Text>
+                <Text disabled={disabled}>{toToken.symbol}</Text>
+            </FlexView>
+            <FlexView>
+                <Text style={{paddingLeft: 20}} disabled={disabled}>
+                    {formatBalance(amountIn || fromToken.balance, fromToken.decimals, 8)}
+                </Text>
+                {/* <TokenAmount style={{paddingLeft: 20}} token={fromToken} amount={amountIn} disabled={disabled} /> */}
+                <Text style={{paddingLeft:5}} disabled={disabled}>{fromToken.symbol}</Text>
+            </FlexView>
+            <FlexView>
+                <Text style={{ color: disabled ? colorDisabled : '#fff', paddingLeft: 20, paddingRight: 3 }}>{pair.canceled ? t("canceled") : price.toString(8)}</Text>
+                <Text disabled={disabled}>{toToken.symbol}</Text>
+                <Text style={{ color: disabled ? colorDisabled : '#fff', paddingLeft: 3, paddingRight: 3 }}>/</Text>
+                <Text disabled={disabled}>{fromToken.symbol}</Text>
+            </FlexView>
+        </FlexView>
     );
 };
 
@@ -197,7 +234,6 @@ const Field = ({ label, value, disabled, minWidth }) => {
     );
 };
 
-// const TableOrder = ()
 
 const OrderInfo = ({ state }: { state: MyLimitOrdersState }) => {
     const t = useTranslation();
@@ -225,7 +261,7 @@ const OrderInfo = ({ state }: { state: MyLimitOrdersState }) => {
             />
             <Meta label={t("amount-to-sell")} text={amountIn} suffix={order?.fromToken?.symbol} disabled={disabled} />
             <Meta label={t("amount-to-buy")} text={amountOutMin} suffix={order?.toToken?.symbol} disabled={disabled} />
-            {/* <Meta label={t("expiration")} text={expiry || undefined} disabled={disabled} /> */}
+            <Meta label={t("expiration")} text={expiry || undefined} disabled={disabled} />
             <FilledEvents state={state} />
             <Controls state={state} />
         </InfoBox>
