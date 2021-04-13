@@ -37,12 +37,13 @@ const useSettlement = () => {
 
     const cancelOrder = useCallback(async (order: Order, signer: ethers.Signer) => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
-        const args = await order.toArgs();
-        const gasLimit = await settlement.estimateGas.cancelOrder(args);
-        const tx = await settlement.cancelOrder(args, {
+        const args = await order.toCancellArgs();
+        debugger
+        const gasLimit = await settlement.estimateGas.cancelOrder(args.hash, args.maker);
+        const tx = await settlement.cancelOrder(args.hash, args.maker, {
             gasLimit: gasLimit.mul(120).div(100)
         });
-        return await logTransaction(tx, "Settlement.cancelOrder()", ...args.map(arg => arg.toString()));
+        return await logTransaction(tx, "Settlement.cancelOrder()", args.hash);
     }, []);
 
     const queryOrderCanceledEvents = useCallback(async (signer: ethers.Signer) => {
@@ -211,6 +212,12 @@ export class Order {
             r,
             s
         ];
+    }
+    async toCancellArgs() {
+        return {
+            maker: await this.maker.getAddress(),
+            hash: await this.hash()
+        };
     }
 }
 
