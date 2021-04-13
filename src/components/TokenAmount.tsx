@@ -9,7 +9,7 @@ import Text from "./Text";
 
 const TokenAmount = (props: { token: Token; amount?: ethers.BigNumber; disabled?: boolean; style?: TextStyle }) => (
     <Text caption={IS_DESKTOP} disabled={props.disabled} style={props.style}>
-        {formatBalance(props.amount || props.token.balance, props.token.decimals, 8)} {props.token.symbol}
+        {formatBalance(props.amount || props.token.balance, props.token.decimals, 8)}
     </Text>
 );
 

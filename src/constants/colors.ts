@@ -26,11 +26,11 @@ export const Colors = {
         overlay: "#ffffffc0"
     },
     dark: {
-        accent: "#27B0E6",
+        accent: "#FABC46",
         header: "#313535",//"#0D0E20",
         submenu: "#00000020",
         background: "#242828",//"#0e0f23",
-        backgroundLight: "#0D0E20",
+        backgroundLight: "#242828",
         border: "#ffffff33",
         borderDark: "#666666",
         textDark: "#d5d1cc",

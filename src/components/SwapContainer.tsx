@@ -14,9 +14,7 @@ const Content: React.FunctionComponent<ViewProps> = props => {
         <View
             {...props}
             style={[
-                {
-                    ...border({ color: darkMode ? borderColor : undefined }),
-                    ...shadow(),                    
+                {                   
                     backgroundColor: background,
                     flexDirection: "row",
                     width: IS_DESKTOP ? 1200 : SCREEN_WIDTH - Spacing.large,
