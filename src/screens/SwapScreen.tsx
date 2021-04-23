@@ -28,7 +28,7 @@ import UnsupportedButton from "../components/UnsupportedButton";
 import WebFooter from "../components/web/WebFooter";
 import { SwapSubMenu } from "../components/web/WebSubMenu";
 import { ROUTER, SETTLEMENT } from "../constants/contracts";
-import { IS_DESKTOP, Spacing } from "../constants/dimension";
+import { IS_DESKTOP, Spacing} from "../constants/dimension";
 import Fraction from "../constants/Fraction";
 import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
 import useColors from "../hooks/useColors";
@@ -51,11 +51,11 @@ const SwapScreen = () => {
                 <SwapContainer>
                     {/* <Title text={t("new-order")} />
                     <Text light={true}>{t("new-order-desc")}</Text> */}
-                    <View style={{ width: '40%' }}>
+                    <View style={{ width: IS_DESKTOP ? '40%': '100%' }}>
                         <Swap />
                     </View>
                     
-                    <View style={{ width: '60%', paddingLeft: '40px', paddingRight: '40px' }}>
+                    <View style={{ width: IS_DESKTOP ? '60%' : '100%', paddingLeft: '40px', paddingRight: '40px' }}>
                         <MyLimitOrdersScreen/>
                     </View>
                 </SwapContainer>
