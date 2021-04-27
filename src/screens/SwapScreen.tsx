@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useState } from "react";
-import { Platform, View } from "react-native";
+import { StyleSheet, Platform, View } from "react-native";
+import { Slider } from 'react-native-elements';
 
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
@@ -41,27 +42,43 @@ import Token from "../types/Token";
 import { getContract, isEmptyValue, isNativeToken, isNativeAndWrappedNativePair, isWrappedNativeToken, parseBalance } from "../utils";
 import Screen from "./Screen";
 import MyLimitOrdersScreen from "./MyLimitOrdersScreen";
+import FlexView from "../components/FlexView";
+// import Slider from "../components/Slider";
+
 
 const SwapScreen = () => {
     const t = useTranslation();
     return (
+        // <Screen>
+        //     <Container>
+        //         <BackgroundImage />
+        //         <SwapContainer>
+        //             {/* <Title text={t("new-order")} />
+        //             <Text light={true}>{t("new-order-desc")}</Text> */}
+                    
+        //             <View style={{ width: IS_DESKTOP ? '40%': '100%' }}>                        
+        //                 <Swap />
+        //             </View>
+                    
+        //             <View style={{ width: IS_DESKTOP ? '60%' : '100%', paddingLeft: '40px', paddingRight: '40px' }}>
+        //                 <MyLimitOrdersScreen/>
+        //             </View>
+        //         </SwapContainer>
+        //         {Platform.OS === "web" && <WebFooter />}
+        //     </Container>
+        //     {/* <SwapSubMenu /> */}
+        // </Screen>
         <Screen>
             <Container>
                 <BackgroundImage />
-                <SwapContainer>
-                    {/* <Title text={t("new-order")} />
-                    <Text light={true}>{t("new-order-desc")}</Text> */}
-                    <View style={{ width: IS_DESKTOP ? '40%': '100%' }}>
-                        <Swap />
-                    </View>
-                    
-                    <View style={{ width: IS_DESKTOP ? '60%' : '100%', paddingLeft: '40px', paddingRight: '40px' }}>
-                        <MyLimitOrdersScreen/>
-                    </View>
-                </SwapContainer>
+                <Content>
+                    <Title text={t("new-order")} />
+                    <Text style={{marginBottom: 40}} light={true}>{t("new-order-desc")}</Text>
+                    <Swap />
+                </Content>
                 {Platform.OS === "web" && <WebFooter />}
             </Container>
-            {/* <SwapSubMenu /> */}
+            <SwapSubMenu />
         </Screen>
     );
 };
@@ -176,8 +193,32 @@ const AmountInput = ({ state }: { state: SwapState }) => {
                 onAmountChanged={state.setFromAmount}
                 autoFocus={IS_DESKTOP}
             />
+            {/* <ButtonPercent state={ state }/> */}
         </View>
     );
+};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: "stretch",
+    justifyContent: "center"
+  }
+});
+
+const ButtonPercent = () => {
+    const [amount, setAmount] = useState<number>(0)
+    return (
+        <View style={styles.container}>
+            <Slider
+                step={0.25}
+                value={amount}
+                onValueChange={(value) => setAmount(value)}
+            />
+            <Text>Value: {amount}</Text>
+        </View>
+    )    
 };
 
 const PriceInput = ({ state }: { state: SwapState }) => {
@@ -473,8 +514,8 @@ const PlaceOrderButton = ({
 }) => {
     const { chainId } = useContext(EthersContext);
     const t = useTranslation();
-    // const goToLimitOrders = useLinker("/swap/my-orders", "LimitOrders");
-    const goToLimitOrders = () => window.location.reload(); 
+    const goToLimitOrders = useLinker("/swap/my-orders", "LimitOrders");
+    // const goToLimitOrders = () => window.location.reload(); 
     const onPress = useCallback(async () => {
         onError({});
         try {

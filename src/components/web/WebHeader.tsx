@@ -69,7 +69,7 @@ const Menu = () => {
         <FlexView
             style={{
                 height: "100%",
-                alignItems: "center"
+                alignItems: "center"                
             }}>
             <MenuItem title={t("menu.home")} path={"/"} />
             <MenuItem title={t("menu.swap")} path={"/swap"} />
@@ -77,7 +77,7 @@ const Menu = () => {
             <MenuItem title={t("menu.migrate")} path={"/migrate"} />
             <MenuItem title={t("menu.stake")} path={"/staking"} />
             <MenuItem title={t("menu.farm")} path={"/farming"} /> */}
-            <DarkModeSwitch style={{ marginLeft: Spacing.small }} />
+            {/* <DarkModeSwitch style={{ marginLeft: Spacing.small }} /> */}
             <Status />
         </FlexView>
     );

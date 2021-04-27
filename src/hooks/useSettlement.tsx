@@ -38,7 +38,6 @@ const useSettlement = () => {
     const cancelOrder = useCallback(async (order: Order, signer: ethers.Signer) => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const args = await order.toCancellArgs();
-        debugger
         const gasLimit = await settlement.estimateGas.cancelOrder(args.hash, args.maker);
         const tx = await settlement.cancelOrder(args.hash, args.maker, {
             gasLimit: gasLimit.mul(120).div(100)
@@ -51,6 +50,7 @@ const useSettlement = () => {
         const filter = settlement.filters.OrderCanceled(null);
         // @ts-ignore
         const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
+        // console.log(await settlement.queryFilter(filter, fromBlock))
         return await settlement.queryFilter(filter,fromBlock);
     }, []);
 
@@ -59,6 +59,7 @@ const useSettlement = () => {
         const filter = settlement.filters.OrderFilled(hash);
         // @ts-ignore
         const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
+        // console.log(await settlement.queryFilter(filter, fromBlock))
         return await settlement.queryFilter(filter, fromBlock);
     }, []);
 

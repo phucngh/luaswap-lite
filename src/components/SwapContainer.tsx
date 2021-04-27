@@ -16,8 +16,8 @@ const Content: React.FunctionComponent<ViewProps> = props => {
             style={[
                 {                   
                     backgroundColor: background,
-                    flexDirection: "row",
-                    width: IS_DESKTOP ? 1200 : SCREEN_WIDTH - Spacing.large,
+                    // flexDirection: "row",
+                    width: IS_DESKTOP ? 768 : SCREEN_WIDTH - Spacing.large,
                     marginLeft: "auto",
                     marginRight: "auto",
                     marginTop: Spacing.huge + SUB_MENU_HEIGHT,

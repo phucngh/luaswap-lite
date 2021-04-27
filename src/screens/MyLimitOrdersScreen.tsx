@@ -34,23 +34,24 @@ import MetamaskError from "../types/MetamaskError";
 import { formatBalance } from "../utils";
 import { TabActions } from "@react-navigation/routers";
 import { BigNumber } from "@ethersproject/bignumber";
-// import Screen from "./Screen";
+import Screen from "./Screen";
+import SwapContainer from "../components/SwapContainer";
 
 const MyLimitOrdersScreen = () => {
     const t = useTranslation();
     return (
-        // <Screen>
-        //     <Container>
-        //         <BackgroundImage />
-        //         <Content>
-        //             <Title text={t("my-orders")} />
-        //             <Text light={true}>{t("my-orders-desc")}</Text>
+        <Screen>
+            <Container>
+                <BackgroundImage />
+                <SwapContainer>
+                    <Title text={t("my-orders")} />
+                    <Text style={{marginBottom: 40}} light={true}>{t("my-orders-desc")}</Text>
                     <MyLimitOrders />
-        //         </Content>
-        //         {Platform.OS === "web" && <WebFooter />}
-        //     </Container>
-        //     <SwapSubMenu />
-        // </Screen>
+                </SwapContainer>
+                {Platform.OS === "web" && <WebFooter />}
+            </Container>
+            <SwapSubMenu />
+        </Screen>
     );
 };
 
@@ -60,7 +61,7 @@ const MyLimitOrders = () => {
     if (chainId !== 56) return <ChangeNetwork />;
     const state = useMyLimitOrdersState();
     return (
-        <View style={{borderStyle: 'solid', borderWidth: 1 ,borderColor:border, padding: 30, borderRadius: 10}}>
+        <View style={{borderStyle: 'solid', borderWidth: 1 ,borderColor:border,paddingTop: 10, padding: 30, borderRadius: 10}}>
             <OrderSelect state={state} />
             <OrderInfo state={state} />
         </View>
@@ -72,7 +73,8 @@ const OrderSelect = (props: { state: MyLimitOrdersState }) => {
     return (
         <View>
             <Expandable
-                title={t("my-orders")}
+                // title={t("my-orders")}
+                title={''}
                 expanded={!props.state.selectedOrder}
                 onExpand={() => props.state.setSelectedOrder()}>
                 <OrderList state={props.state} />
@@ -91,7 +93,6 @@ const OrderSelect = (props: { state: MyLimitOrdersState }) => {
 const OrderList = ({ state }: { state: MyLimitOrdersState }) => {
     const renderItem = useCallback(
         ({ item }) => {
-            // console.log(item)
             return (
                 <OrderItem key={item.address} order={item} selected={false} onSelectOrder={state.setSelectedOrder} />
             );
@@ -128,16 +129,13 @@ const EmptyList = () => {
 
 const OrderItem = (props: { order: Order; selected: boolean; onSelectOrder: (order: Order) => void }) => {
     const t = useTranslation();
-    const { amountIn, amountOutMin, fromToken, toToken } = props.order;
+    // const { amountIn, amountOutMin, fromToken, toToken } = props.order;
     const pair = props.order
-    // console.log(props.order)
     const status = props.order.status();
     const disabled = status !== "Open";
-    // const price = Fraction.fromTokens(amountOutMin, amountIn, toToken, fromToken);
     const onPress = useCallback(() => props.onSelectOrder(props.order), [props.onSelectOrder, props.order]);
     // const pairs = fromToken.symbol + '/' + toToken.symbol
     // const { green, red, disabled: colorDisabled } = useColors();
-    // console.log(fromToken,amountIn, toToken,amountOutMin)
     return (
         <Selectable
             selected={props.selected}

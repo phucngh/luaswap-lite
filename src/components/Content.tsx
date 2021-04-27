@@ -15,8 +15,8 @@ const Content: React.FunctionComponent<ViewProps> = props => {
             {...props}
             style={[
                 {
-                    ...border({ color: darkMode ? borderColor : undefined }),
-                    ...shadow(),
+                    // ...border({ color: darkMode ? borderColor : undefined }),
+                    // ...shadow(),
                     backgroundColor: background,
                     width: IS_DESKTOP ? DESKTOP_CONTENT_WIDTH : SCREEN_WIDTH - Spacing.large,
                     marginLeft: "auto",
