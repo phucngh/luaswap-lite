@@ -43,6 +43,7 @@ interface LPTokenItemProps {
 
 const HomeScreen = () => {
     const { chainId } = useContext(EthersContext);
+    const {border} = useColors()
     if (chainId !== 56) return <ChangeNetwork />;
     
     const t = useTranslation();
@@ -54,7 +55,7 @@ const HomeScreen = () => {
         <Screen>
             <Container>
                 <BackgroundImage />
-                <Content style={{ paddingBottom: Spacing.huge }}>
+                <Content style={{ paddingBottom: Spacing.huge, borderRadius:16, borderStyle: 'solid', borderWidth: 1 ,borderColor:border }}>
                     <Title text={t("total-value")} style={{ flex: 1, marginTop: Spacing.normal }} />
                     <Title
                         text={loading ? t("fetching") : formatUSD(totalValue, 4)}
@@ -174,7 +175,7 @@ const TokenItem = (props: TokenItemProps) => {
                     {IS_DESKTOP && <TokenSymbol token={props.token} disabled={props.disabled} />}
                 </FlexView>
             </View>
-            <ExternalIcon path={"/tokens/" + props.token.address} />
+            {/* <ExternalIcon path={"/tokens/" + props.token.address} /> */}
         </FlexView>
     );
 };

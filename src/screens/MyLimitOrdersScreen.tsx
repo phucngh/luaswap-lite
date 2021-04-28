@@ -71,10 +71,11 @@ const MyLimitOrders = () => {
 const OrderSelect = (props: { state: MyLimitOrdersState }) => {
     const t = useTranslation();
     return (
-        <View>
+        <View style={{ overflow: !IS_DESKTOP ? "auto" : "hidden" }}>
             <Expandable
                 // title={t("my-orders")}
                 title={''}
+                style={{width: !IS_DESKTOP ? 580 : "auto"}}
                 expanded={!props.state.selectedOrder}
                 onExpand={() => props.state.setSelectedOrder()}>
                 <OrderList state={props.state} />
@@ -133,9 +134,11 @@ const OrderItem = (props: { order: Order; selected: boolean; onSelectOrder: (ord
     const pair = props.order
     const status = props.order.status();
     const disabled = status !== "Open";
+    // const price = Fraction.fromTokens(amountOutMin, amountIn, toToken, fromToken);
     const onPress = useCallback(() => props.onSelectOrder(props.order), [props.onSelectOrder, props.order]);
     // const pairs = fromToken.symbol + '/' + toToken.symbol
     // const { green, red, disabled: colorDisabled } = useColors();
+    // console.log(fromToken,amountIn, toToken,amountOutMin)
     return (
         <Selectable
             selected={props.selected}

@@ -113,8 +113,8 @@ const AppScreens = () => {
                     labelStyle: { marginBottom: 4 }
                 }}>
                 <Tab.Screen name="Home" component={SwapScreen} options={tabOptions("home")} />
-                {/* <Tab.Screen name="Liquidity" component={LiquidityScreen} options={tabOptions("water")} />
-                <Tab.Screen name="Farming" component={FarmingScreen} options={tabOptions("leaf")} /> */}
+                <Tab.Screen name="Liquidity" component={LiquidityScreen} options={tabOptions("water")} />
+                <Tab.Screen name="Farming" component={FarmingScreen} options={tabOptions("leaf")} />
             </Tab.Navigator>
         </NavigationContainer>
     );

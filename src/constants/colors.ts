@@ -28,7 +28,7 @@ export const Colors = {
     dark: {
         accent: "#FABC46",
         header: "#313535",//"#0D0E20",
-        submenu: "#00000020",
+        submenu: "#242424",
         background: "#242828",//"#0e0f23",
         backgroundLight: "#242828",
         border: "#ffffff33",

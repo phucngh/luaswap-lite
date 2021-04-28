@@ -108,8 +108,8 @@ const WebSubMenu: FC<WebSubMenuProps> = props => {
     return (
         <View
             style={{
-                position: "absolute",
-                top: 0,
+                position: "fixed",
+                top: 64,
                 height: SUB_MENU_HEIGHT,
                 width: "100%",
                 backgroundColor: submenu
