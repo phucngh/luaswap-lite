@@ -55,7 +55,7 @@ const HarvestScreen = () => {
 
 const Harvest = () => {
     const { chainId } = useContext(EthersContext);
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     const t = useTranslation();
     const state = useFarmingState(true);
     return (

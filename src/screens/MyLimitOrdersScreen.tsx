@@ -58,7 +58,7 @@ const MyLimitOrdersScreen = () => {
 const MyLimitOrders = () => {
     const { chainId } = useContext(EthersContext);
     const {border} = useColors()
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     const state = useMyLimitOrdersState();
     return (
         <View style={{borderStyle: 'solid', borderWidth: 1 ,borderColor:border,paddingTop: 10, padding: 30, borderRadius: 10}}>
@@ -283,7 +283,7 @@ const OrderInfo = ({ state }: { state: MyLimitOrdersState }) => {
 
 const FilledEvents = ({ state }: { state: MyLimitOrdersState }) => {
     const t = useTranslation();
-    const prefix = "https://bscscan.com/tx/";
+    const prefix = "https://scan.tomochain.com/tx/";
     return (
         <View>
             {state.filledEvents &&
@@ -302,7 +302,7 @@ const Controls = ({ state }: { state: MyLimitOrdersState }) => {
     useAsyncEffect(() => setError({}), [state.selectedOrder]);
     return (
         <View style={{ marginTop: Spacing.normal }}>
-            {chainId === 56 ? <CancelButton state={state} onError={setError} /> : <ChangeNetwork />}
+            {chainId === 88 ? <CancelButton state={state} onError={setError} /> : <ChangeNetwork />}
             {error.message && error.code !== 4001 && <ErrorMessage error={error} />}
         </View>
     );

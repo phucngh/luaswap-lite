@@ -52,7 +52,7 @@ const MigrateScreen = () => {
 
 const Migrate = () => {
     const { ethereum, chainId } = useContext(EthersContext);
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     const state = useMigrateState();
     return (
         <View style={{ marginTop: Spacing.large }}>

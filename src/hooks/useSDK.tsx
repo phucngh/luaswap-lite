@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@pancakeswap-libs/sdk";
+import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@luaswap/sdk";
 import { ethers } from "ethers";
 import { EthersContext } from "../context/EthersContext";
 import Token from "../types/Token";

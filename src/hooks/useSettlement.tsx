@@ -49,8 +49,7 @@ const useSettlement = () => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderCanceled(null);
         // @ts-ignore
-        const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
-        // console.log(await settlement.queryFilter(filter, fromBlock))
+        const fromBlock = (await signer.provider.getBlockNumber()) - 20000;
         return await settlement.queryFilter(filter,fromBlock);
     }, []);
 
@@ -58,8 +57,7 @@ const useSettlement = () => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderFilled(hash);
         // @ts-ignore
-        const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
-        // console.log(await settlement.queryFilter(filter, fromBlock))
+        const fromBlock = (await signer.provider.getBlockNumber()) - 20000;
         return await settlement.queryFilter(filter, fromBlock);
     }, []);
 
@@ -172,7 +170,7 @@ export class Order {
         const domain = {
             name: "OrderBook",
             version: "1",
-            chainId: 56,
+            chainId: 88,
             verifyingContract: ORDER_BOOK
         };
         const types = {

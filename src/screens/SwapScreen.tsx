@@ -86,10 +86,10 @@ const SwapScreen = () => {
 const Swap = () => {
     const { chainId } = useContext(EthersContext);
     const {border} = useColors()
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     const state = useSwapState();
     return (
-        <View style={{borderStyle: 'solid', borderWidth: 1 ,borderColor:border, padding: 30, borderRadius: 10}}>
+        <View style={{ borderStyle: 'solid', borderWidth: 1, borderColor: border, padding: 30, borderRadius: 10 }}>
             <OrderTypeSelect state={state} />
             <Border />
             <FromTokenSelect state={state} />
@@ -153,18 +153,13 @@ const FromTokenSelect = ({ state }: { state: SwapState }) => {
 };
 
 const ToTokenSelect = ({ state }: { state: SwapState }) => {
-    const { chainId } = useContext(EthersContext);
     const t = useTranslation();
     if (!state.orderType || !state.fromSymbol) {
         return <Heading text={t("token-to-buy")} disabled={true} />;
     }
     const limit = state.orderType === "limit";
     const onChangeSymbol = (symbol: string) => {
-        if (chainId === 56) {
-            state.setToSymbol(limit && symbol === "BNB" ? "WBNB" : symbol);
-        } else {
-            state.setToSymbol(limit && symbol === "ETH" ? "WETH" : symbol);
-        }
+        state.setToSymbol(limit && symbol === "TOMO" ? "WTOMO" : symbol);
     };
     return (
         <View>
@@ -280,7 +275,7 @@ const TradeInfo = ({ state }: { state: SwapState }) => {
         isEmptyValue(state.fromAmount) ||
         (state.orderType === "limit" && isNativeToken(state.fromToken)) ||
         (!state.loading && !state.trade);
-    const onGetKeth = useLinker("https://faucet.kovan.network/", "", "_blank");
+    // const onGetKeth = useLinker("https://faucet.kovan.network/", "", "_blank");
     return (
         <InfoBox>
             {state.orderType === "limit" ? (
@@ -477,7 +472,7 @@ const LimitOrderControls = ({ state }: { state: SwapState }) => {
                 <FetchingButton />
             ) : (
                 <>
-                    {chainId === 56 ? (
+                    {chainId === 88 ? (
                         <ApproveButton
                             token={state.fromToken!}
                             spender={SETTLEMENT}
@@ -525,7 +520,7 @@ const PlaceOrderButton = ({
             onError(e);
         }
     }, [state.onCreateOrder, goToLimitOrders, onError]);
-    if (!disabled && (chainId !== 56)) return <ChangeNetwork chainId={56} />;
+    if (!disabled && (chainId !== 88)) return <ChangeNetwork chainId={88} />;
     return (
         <Button title={t("place-order")} disabled={disabled} loading={state.creatingOrder} onPress={onPress} />
     );

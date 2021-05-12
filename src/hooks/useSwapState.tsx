@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { Trade } from "@pancakeswap-libs/sdk";
+import { Trade } from "@luaswap/sdk";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
 import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
@@ -54,8 +54,8 @@ const useSwapState: () => SwapState = () => {
 
     const getProvider = () => {
         switch (chainId) {
-            case 56: 
-                return BSC_MAINET_PROVIDER
+            case 88: 
+                return TOMOCHAIN_MAINET_PROVIDER
             default:
                 return provider
         }

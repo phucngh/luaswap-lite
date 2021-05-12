@@ -114,7 +114,7 @@ const Status = () => {
     const title = !!address
         ? ensName || address!.substring(0, 6) + "..." + address!.substring(address!.length - 4, address!.length)
         : t("menu.not-connected");
-    const color = (chainId === 56) ? green : chainId === 42 ? "#8A2BE2" : textLight;
+    const color = (chainId === 88) ? green : chainId === 42 ? "#8A2BE2" : textLight;
     const onPress = () => {
         if (confirm(t("do-you-want-to-disconnect"))) ethereum?.disconnect?.();
     };

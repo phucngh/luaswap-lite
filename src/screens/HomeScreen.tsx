@@ -44,7 +44,7 @@ interface LPTokenItemProps {
 const HomeScreen = () => {
     const { chainId } = useContext(EthersContext);
     const {border} = useColors()
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     
     const t = useTranslation();
     const state = useHomeState();

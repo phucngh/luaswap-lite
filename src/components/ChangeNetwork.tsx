@@ -5,7 +5,7 @@ import { Spacing } from "../constants/dimension";
 import useTranslation from "../hooks/useTranslation";
 import Text from "./Text";
 
-const ChangeNetwork = ({ chainId = 56 }) => {
+const ChangeNetwork = ({ chainId = 88 }) => {
     const t = useTranslation();
     const networkName = {
         // 1: "Ethereum Mainnet",
