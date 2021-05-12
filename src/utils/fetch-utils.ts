@@ -6,7 +6,7 @@ import _ from "lodash";
 import { LP_TOKEN_SCANNER, MASTER_CHEF, ORDER_BOOK, SETTLEMENT } from "../constants/contracts";
 import Fraction from "../constants/Fraction";
 import { TOMO } from "../constants/tokens";
-import { ALCHEMY_PROVIDER, KOVAN_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER } from "../context/EthersContext";
+import { ALCHEMY_PROVIDER, KOVAN_PROVIDER, TOMOCHAIN_MAINET_PROVIDER } from "../context/EthersContext";
 import { Order, OrderStatus } from "../hooks/useSettlement";
 import LPToken from "../types/LPToken";
 import Token from "../types/Token";

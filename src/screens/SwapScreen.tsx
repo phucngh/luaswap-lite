@@ -31,7 +31,7 @@ import { SwapSubMenu } from "../components/web/WebSubMenu";
 import { ROUTER, SETTLEMENT } from "../constants/contracts";
 import { IS_DESKTOP, Spacing} from "../constants/dimension";
 import Fraction from "../constants/Fraction";
-import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
+import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
 import useColors from "../hooks/useColors";
 import useDelayedEffect from "../hooks/useDelayedEffect";
 import useLinker from "../hooks/useLinker";
@@ -440,7 +440,7 @@ const LimitOrderControls = ({ state }: { state: SwapState }) => {
         async () => {
             if (state.fromToken && !isEmptyValue(state.fromAmount)) {
                 const fromAmount = parseBalance(state.fromAmount, state.fromToken.decimals);
-                const erc20 = getContract("ERC20", state.fromToken.address, BSC_MAINET_PROVIDER);
+                const erc20 = getContract("ERC20", state.fromToken.address, TOMOCHAIN_MAINET_PROVIDER);
                 const allowance = await erc20.allowance(address, SETTLEMENT);
                 setAllowed(ethers.BigNumber.from(allowance).gte(fromAmount));
             }

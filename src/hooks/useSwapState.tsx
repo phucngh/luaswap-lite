@@ -3,7 +3,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { Trade } from "@luaswap/sdk";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
-import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
+import { ALCHEMY_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, EthersContext } from "../context/EthersContext";
 import { formatBalance, isEmptyValue, isNativeToken, parseBalance, pow10 } from "../utils";
 import useDelayedEffect from "./useDelayedEffect";
 import useDelayedOnBlockEffect from "./useDelayedOnBlockEffect";
