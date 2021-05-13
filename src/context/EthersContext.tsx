@@ -138,14 +138,13 @@ export const EthersContextProvider = ({ children }) => {
     const updateTokens = async () => {
         if (address && chainId === 88 && customTokens) {
             try {
-                const p = TOMOCHAIN_MAINET_PROVIDER;
-                const list = await fetchTokens(p, address, customTokens);
+                const list = await fetchTokens(TOMOCHAIN_MAINET_PROVIDER, address, customTokens);
                 const weth = list.find(t => isWrappedNativeToken(t));
-                if (list?.length > 0 && weth && p) {
+                if (list?.length > 0 && weth && TOMOCHAIN_MAINET_PROVIDER) {
                     const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
                     setTokens(
                         await Promise.all(
-                            list.map(async token => await fetchTokenWithValue(token, weth, wethPriceUSD, getPair, p))
+                            list.map(async token => await fetchTokenWithValue(token, weth, wethPriceUSD, getPair, TOMOCHAIN_MAINET_PROVIDER))
                         )
                     );
                 }

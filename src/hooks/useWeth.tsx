@@ -1,29 +1,29 @@
 import { useCallback } from "react";
-import { WETH as WTOMO } from "@luaswap/sdk";
+import { WETH } from "@luaswap/sdk";
 import { ethers } from "ethers";
 import { getContract } from "../utils";
 import { logTransaction } from "../utils/analytics-utils";
 
-const useWeth = (chainId = 89) => {
+const useWeth = (chainId = 88) => {
     const wrapETH = useCallback(async (amount: ethers.BigNumber, signer: ethers.Signer) => {
-            const wtomo = getContract("IWETH", WTOMO[88].address, signer);
-            const gasLimit = await wtomo.estimateGas.deposit({
+            const weth = getContract("IWETH", WETH[chainId].address, signer);
+            const gasLimit = await weth.estimateGas.deposit({
                 value: amount
             });
-            const tx = await wtomo.deposit({
+            const tx = await weth.deposit({
                 value: amount,
                 gasLimit
             });
-            return await logTransaction(tx, "WTOMO.deposit()");        
+            return await logTransaction(tx, "WETH.deposit()");        
     }, []);
 
     const unwrapETH = useCallback(async (amount: ethers.BigNumber, signer: ethers.Signer) => {
-        const wtomo = getContract("IWETH", WTOMO[88].address, signer);
-        const gasLimit = await wtomo.estimateGas.withdraw(amount);
-        const tx = await wtomo.withdraw(amount, {
+        const weth = getContract("IWETH", WETH[chainId].address, signer);
+        const gasLimit = await weth.estimateGas.withdraw(amount);
+        const tx = await weth.withdraw(amount, {
             gasLimit
         });
-        return await logTransaction(tx, "WTOMO.withdraw()");        
+        return await logTransaction(tx, "WETH.withdraw()");        
         
     }, []);
 

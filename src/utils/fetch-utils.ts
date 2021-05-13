@@ -1,4 +1,4 @@
-import { TOMO_FACTORY_ADDRESS, Pair } from "@luaswap/sdk";
+import { FACTORY_ADDRESS as TOMO_FACTORY_ADDRESS, Pair } from "@luaswap/sdk";
 import luaData from "../../lua-data.js";
 import { FACTORY_ADDRESS as UNISWAP_FACTORY } from "@uniswap/sdk";
 import { ethers } from "ethers";
@@ -91,24 +91,24 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             // "chainId": 88,
             // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x476c5E26a75bd202a9683ffD34359C0CC15be0fF/logo.png"
             // },
+            // {
+            // "name": "Tomo Finance",
+            // "address": "0xB2444519F4653831b097B388D985aB3FdD5D600e",
+            // "symbol": "TAI",
+            // "decimals": 18,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/tomochain/luaswap-token-list/master/src/tokens/icons/tomochain/0xB2444519F4653831b097B388D985aB3FdD5D600e.png"
+            // },
+            // {
+            // "name": "Wrapped USD Coin",
+            // "address": "0xCCA4E6302510d555B654B3EaB9c0fCB223BCFDf0",
+            // "symbol": "USDC",
+            // "decimals": 6,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+            // },
             {
-            "name": "Tomo Finance",
-            "address": "0xB2444519F4653831b097B388D985aB3FdD5D600e",
-            "symbol": "TAI",
-            "decimals": 18,
-            "chainId": 88,
-            "logoURI": "https://raw.githubusercontent.com/tomochain/luaswap-token-list/master/src/tokens/icons/tomochain/0xB2444519F4653831b097B388D985aB3FdD5D600e.png"
-            },
-            {
-            "name": "Wrapped USD Coin",
-            "address": "0xCCA4E6302510d555B654B3EaB9c0fCB223BCFDf0",
-            "symbol": "USDC",
-            "decimals": 6,
-            "chainId": 88,
-            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
-            },
-            {
-            "name": "Wrapped Tether USD",
+            "name": "Wrapped USDT",
             "address": "0x381B31409e4D220919B2cFF012ED94d70135A59e",
             "symbol": "USDT",
             "decimals": 6,
@@ -124,7 +124,7 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
             "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x05D3606d5c81EB9b7B18530995eC9B29da05FaBa/logo.png"
             }
         ]
-        }
+    }
     const tokens = [...json.tokens, ...(customTokens || [])]
 
     const balances = await fetchTokenBalances(

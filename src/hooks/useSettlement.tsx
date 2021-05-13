@@ -49,7 +49,7 @@ const useSettlement = () => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderCanceled(null);
         // @ts-ignore
-        const fromBlock = (await signer.provider.getBlockNumber()) - 20000;
+        const fromBlock = (await signer.provider.getBlockNumber()) - 5000;
         return await settlement.queryFilter(filter,fromBlock);
     }, []);
 
@@ -57,7 +57,7 @@ const useSettlement = () => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderFilled(hash);
         // @ts-ignore
-        const fromBlock = (await signer.provider.getBlockNumber()) - 20000;
+        const fromBlock = (await signer.provider.getBlockNumber()) - 5000;
         return await settlement.queryFilter(filter, fromBlock);
     }, []);
 

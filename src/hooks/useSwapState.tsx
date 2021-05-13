@@ -84,13 +84,13 @@ const useSwapState: () => SwapState = () => {
             if (!block) {
                 setLoading(true);
             }
-            const p = getProvider();
-            if (state.fromToken && state.toToken && state.fromAmount && p) {
+            // const p = getProvider();
+            if (state.fromToken && state.toToken && state.fromAmount) {
                 const amount = parseBalance(state.fromAmount, state.fromToken.decimals);
                 if (!amount.isZero()) {
                     setUnsupported(false);
                     try {
-                        setTrade(await getTrade(state.fromToken, state.toToken, amount, p));
+                        setTrade(await getTrade(state.fromToken, state.toToken, amount, TOMOCHAIN_MAINET_PROVIDER));
                     } catch (e) {
                         setUnsupported(true);
                     } finally {
@@ -100,7 +100,7 @@ const useSwapState: () => SwapState = () => {
             }
         },
         () => "getTrade(" + state.fromSymbol + "," + state.toSymbol + "," + state.fromAmount + ")",
-        [chainId, provider, state.fromToken, state.toToken, state.fromAmount]
+        [chainId, state.fromToken, state.toToken, state.fromAmount]
     );
 
     useAsyncEffect(() => {

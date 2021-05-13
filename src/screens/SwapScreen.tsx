@@ -313,7 +313,7 @@ const WrapInfo = ({ state }: { state: SwapState }) => {
 const SwapInfo = ({ state, disabled }: { state: SwapState; disabled: boolean }) => {
     const t = useTranslation();
     const amount = state.trade?.outputAmount?.toFixed();
-    const price = state.trade?.executionPrice?.toFixed();
+    const price = state.trade?.executionPrice?.toFixed();    
     const impact = state.trade?.priceImpact?.toFixed(2);
     return (
         <View>
@@ -419,7 +419,7 @@ const LimitOrderInfo = ({ state }: { state: SwapState }) => {
             <Meta
                 label={t("market-price")}
                 text={state.trade?.executionPrice?.toFixed(8) || undefined}
-                suffix={state.fromSymbol + " / " + state.toSymbol}
+                suffix={state.toSymbol + " / " + state.fromSymbol}
                 disabled={d}
             />
             <Meta label={t("relayer-fee-amount")} text={state.limitOrderFee} suffix={state.fromSymbol} disabled={d} />

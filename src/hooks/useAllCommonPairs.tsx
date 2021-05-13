@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 
-import { ChainId, Currency, ETHER, Fetcher, Pair, Token, WETH } from "@luaswap/sdk";
+import { ChainId, Currency, TOMO, Fetcher, Pair, Token, WETH } from "@luaswap/sdk";
 import { ethers } from "ethers";
 
 const WBTC = new Token(ChainId.TOMOCHAIN_MAINNET, "0xAE44807D8A9CE4B30146437474Ed6fAAAFa1B809", 8, "WBTC", "Wrapped BTC");
@@ -8,11 +8,11 @@ const ETH = new Token(ChainId.TOMOCHAIN_MAINNET, "0x2EAA73Bd0db20c64f53fEbeA7b5F
 const USDT = new Token(ChainId.TOMOCHAIN_MAINNET, "0x381B31409e4D220919B2cFF012ED94d70135A59e", 6, "USDT", "Tether USD");
 const LUA = new Token(ChainId.TOMOCHAIN_MAINNET, '0x7262fa193e9590b2e075c3c16170f3f2f32f5c74', 18, "LUA", "LuaToken")
 
-const BASES_TO_CHECK_TRADES_AGAINST = [WETH[ChainId.TOMOCHAIN_MAINNET], WBTC, ETH, USDT, LUA];
+const BASES_TO_CHECK_TRADES_AGAINST = [WETH[ChainId.TOMOCHAIN_MAINNET], ETH, USDT, LUA];
 const CUSTOM_BASES = {};
 
 function wrappedCurrency(currency: Currency | undefined): Token | undefined {
-    return currency === ETHER ? WETH[ChainId.TOMOCHAIN_MAINNET] : currency instanceof Token ? currency : undefined;
+    return currency === TOMO ? WETH[ChainId.TOMOCHAIN_MAINNET] : currency instanceof Token ? currency : undefined;
 }
 
 // Source: https://github.com/Uniswap/uniswap-interface/blob/master/src/hooks/Trades.ts

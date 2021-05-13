@@ -44,7 +44,7 @@
   "unwrap": "Unwrap",
   "market-price": "Market Price",
   "relayer-fee-amount": "Relayer Fee (0.20%)",
-  "swap-fee-amount": "Swap Fee (0.20%)",
+  "swap-fee-amount": "Swap Fee (0.40%)",
   "expiration": "Expiration",
   "24-hours-from-now": "24 Hours From Now",
   "set-price-greater-than-market": "Set Price Greater Than Market",
