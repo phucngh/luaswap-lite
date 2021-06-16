@@ -7,7 +7,7 @@ import luaData from "../../lua-data.js";
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
 import Fraction from "../constants/Fraction";
-import { BNB } from "../constants/tokens";
+import { TOMO } from "../constants/tokens";
 import useSDK from "../hooks/useSDK";
 import Ethereum from "../types/Ethereum";
 import Token from "../types/Token";
@@ -41,10 +41,10 @@ export const EthersContext = React.createContext({
     ensName: null as string | null,
     addOnBlockListener: (_name: string, _listener: OnBlockListener) => {},
     removeOnBlockListener: (_name: string) => {},
-    tokens: [BNB] as TokenWithValue[],
+    tokens: [TOMO] as TokenWithValue[],
     updateTokens: async () => {},
     loadingTokens: false,
-    customTokens: [BNB] as Token[],
+    customTokens: [TOMO] as Token[],
     addCustomToken: (_token: Token) => {},
     removeCustomToken: (_token: Token) => {},
     approveToken: async (_token: string, _spender: string, _amount?: ethers.BigNumber) => {
@@ -67,7 +67,7 @@ export const EthersContextProvider = ({ children }) => {
     const [ethereum, setEthereum] = useState<Ethereum | undefined>(window.ethereum);
     const [provider, setProvider] = useState<ethers.providers.JsonRpcProvider>();
     const [signer, setSigner] = useState<ethers.providers.JsonRpcSigner>();
-    const [chainId, setChainId] = useState<number>(56);
+    const [chainId, setChainId] = useState<number>(88);
     const [address, setAddress] = useState<string | null>(null);
     const [ensName, setENSName] = useState<string | null>(null);
     const [onBlockListeners, setOnBlockListeners] = useState<{ [name: string]: OnBlockListener }>({});
@@ -80,7 +80,7 @@ export const EthersContextProvider = ({ children }) => {
         if (ethereum) {
             const web3 = new ethers.providers.Web3Provider(ethereum);
             const web3Signer = await web3.getSigner();
-            setProvider(ethereum.isMetaMask ? web3Signer.provider : BSC_MAINET_PROVIDER)
+            setProvider(ethereum.isMetaMask ? web3Signer.provider : TOMOCHAIN_MAINET_PROVIDER)
             setSigner(web3Signer);
         }
     }, [ethereum, chainId]);
@@ -128,7 +128,7 @@ export const EthersContextProvider = ({ children }) => {
                     // setENSName(ens2)
                     break
                 case 56: 
-                    // let ens3 = await BSC_MAINET_PROVIDER.lookupAddress(address)
+                    // let ens3 = await TOMOCHAIN_MAINET_PROVIDER.lookupAddress(address)
                     // setENSName(ens3)
                     break
             }
@@ -136,16 +136,15 @@ export const EthersContextProvider = ({ children }) => {
     }, [provider, address]);
 
     const updateTokens = async () => {
-        if (address && chainId === 56 && customTokens) {
+        if (address && chainId === 88 && customTokens) {
             try {
-                const p = BSC_MAINET_PROVIDER;
-                const list = await fetchTokens(p, address, customTokens);
+                const list = await fetchTokens(TOMOCHAIN_MAINET_PROVIDER, address, customTokens);
                 const weth = list.find(t => isWrappedNativeToken(t));
-                if (list?.length > 0 && weth && p) {
+                if (list?.length > 0 && weth && TOMOCHAIN_MAINET_PROVIDER) {
                     const wethPriceUSD = Fraction.parse(String(await luaData.weth.price()));
                     setTokens(
                         await Promise.all(
-                            list.map(async token => await fetchTokenWithValue(token, weth, wethPriceUSD, getPair, p))
+                            list.map(async token => await fetchTokenWithValue(token, weth, wethPriceUSD, getPair, TOMOCHAIN_MAINET_PROVIDER))
                         )
                     );
                 }
@@ -160,7 +159,7 @@ export const EthersContextProvider = ({ children }) => {
     }, []);
 
     useAsyncEffect(async () => {
-        if (address && chainId === 56 && customTokens) {
+        if (address && chainId === 88 && customTokens) {
             setLoadingTokens(true);
             await updateTokens();
         }
@@ -255,7 +254,7 @@ export const EthersContextProvider = ({ children }) => {
 
     useEffect(() => {
         // if (provider && chainId === 1) {
-        if (provider && chainId === 56) {
+        if (provider && chainId === 88) {
             const onBlock = async (block: number) => {
                 for (const listener of Object.entries(onBlockListeners)) {
                     await listener[1]?.(block);

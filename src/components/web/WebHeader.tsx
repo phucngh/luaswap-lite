@@ -69,7 +69,7 @@ const Menu = () => {
         <FlexView
             style={{
                 height: "100%",
-                alignItems: "center"
+                alignItems: "center"                
             }}>
             <MenuItem title={t("menu.home")} path={"/"} />
             <MenuItem title={t("menu.swap")} path={"/swap"} />
@@ -77,7 +77,7 @@ const Menu = () => {
             <MenuItem title={t("menu.migrate")} path={"/migrate"} />
             <MenuItem title={t("menu.stake")} path={"/staking"} />
             <MenuItem title={t("menu.farm")} path={"/farming"} /> */}
-            <DarkModeSwitch style={{ marginLeft: Spacing.small }} />
+            {/* <DarkModeSwitch style={{ marginLeft: Spacing.small }} /> */}
             <Status />
         </FlexView>
     );
@@ -114,7 +114,7 @@ const Status = () => {
     const title = !!address
         ? ensName || address!.substring(0, 6) + "..." + address!.substring(address!.length - 4, address!.length)
         : t("menu.not-connected");
-    const color = (chainId === 56) ? green : chainId === 42 ? "#8A2BE2" : textLight;
+    const color = (chainId === 88) ? green : chainId === 42 ? "#8A2BE2" : textLight;
     const onPress = () => {
         if (confirm(t("do-you-want-to-disconnect"))) ethereum?.disconnect?.();
     };

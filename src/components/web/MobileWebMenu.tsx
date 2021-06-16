@@ -32,15 +32,15 @@ const MobileWebMenu = ({ expanded, onCollapse }) => {
                         <CloseButton onPress={onCollapse} />
                     </View>
                     <View style={{ alignItems: "flex-end" }}>
-                        <DarkModeSwitch style={{ marginBottom: 4 }} />
+                        {/* <DarkModeSwitch style={{ marginBottom: 4 }} /> */}
                         <Status />
                         <View style={{ height: Spacing.large }} />
                         <MobileWebMenuItem title={t("menu.home")} path={"/"} />
                         <MobileWebMenuItem title={t("menu.swap")} path={"/swap"} />
-                        <MobileWebMenuItem title={t("menu.liquidity")} path={"/liquidity"} />
+                        {/* <MobileWebMenuItem title={t("menu.liquidity")} path={"/liquidity"} />
                         <MobileWebMenuItem title={t("menu.migrate")} path={"/migrate"} />
                         <MobileWebMenuItem title={t("menu.stake")} path={"/staking"} />
-                        <MobileWebMenuItem title={t("menu.farm")} path={"/farming"} />
+                        <MobileWebMenuItem title={t("menu.farm")} path={"/farming"} /> */}
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -75,7 +75,7 @@ const Status = () => {
     const t = useTranslation();
     const { textLight, green, accent } = useColors();
     const { ethereum, chainId, address, ensName } = useContext(EthersContext);
-    const connected = (chainId === 56) && address;
+    const connected = (chainId === 88) && address;
     const title = connected
         ? ensName || address!.substring(0, 6) + "..." + address!.substring(address!.length - 4, address!.length)
         : t("menu.not-connected");

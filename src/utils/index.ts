@@ -1,7 +1,6 @@
-import { ChainId, CurrencyAmount, Percent, Token as SDKToken, TokenAmount, WETH } from "@pancakeswap-libs/sdk";
-import { WETH as WBNB } from "@pancakeswap-libs/sdk";
+import { ChainId, CurrencyAmount, Percent, Token as SDKToken, TokenAmount, WETH } from "@luaswap/sdk";
 import { ethers } from "ethers";
-import { BNB } from "../constants/tokens";
+import { TOMO } from "../constants/tokens";
 import Token from "../types/Token";
 import getContract from "./getContract";
 
@@ -47,11 +46,11 @@ export const isEmptyValue = (text: string) =>
         : text === "" || text.replace(/0/g, "").replace(/\./, "") === "";
 
 export const isNativeToken = (token?: Token) => {
-    return token?.address.toLowerCase() === BNB.address.toLowerCase();
+    return token?.address.toLowerCase() === TOMO.address.toLowerCase();
 }
 
 export const isWrappedNativeToken = (token?: Token) => {
-    return token?.address.toLowerCase() === WBNB[56].address.toLowerCase();
+    return token?.address.toLowerCase() === WETH[88].address.toLowerCase();
 }
 
 export const isNativeAndWrappedNativePair = (fromToken?: Token, toToken?: Token) => {
@@ -59,7 +58,7 @@ export const isNativeAndWrappedNativePair = (fromToken?: Token, toToken?: Token)
 };
 
 export const convertToken = (token: Token) => {
-    return token.symbol === "BNB" ? WETH["56"] : new SDKToken(ChainId.MAINNET, token.address, token.decimals);
+    return token.symbol === "TOMO" ? WETH[88] : new SDKToken(ChainId.TOMOCHAIN_MAINNET, token.address, token.decimals);
 };
 
 export const convertAmount = (token: Token, amount: string) => {

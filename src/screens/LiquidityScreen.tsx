@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useState } from "react";
 import { Platform, View } from "react-native";
 
-import { TokenAmount } from "@pancakeswap-libs/sdk";
+import { TokenAmount } from "@luaswap/sdk";
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
 import AmountMeta from "../components/AmountMeta";
@@ -62,7 +62,7 @@ const LiquidityScreen = () => {
 
 const AddLiquidity = () => {
     const { chainId } = useContext(EthersContext);
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     const state = useAddLiquidityState();
     return (
         <View style={{ marginTop: Spacing.large }}>

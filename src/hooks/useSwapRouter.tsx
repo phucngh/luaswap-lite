@@ -1,13 +1,13 @@
 import { useCallback } from "react";
 
-import { Percent, Router, Trade } from "@pancakeswap-libs/sdk";
+import { Percent, Router, Trade } from "@luaswap/sdk";
 import { ethers } from "ethers";
 import { ROUTER } from "../constants/contracts";
 import Token from "../types/Token";
 import { deduct, getContract } from "../utils";
 import { logTransaction } from "../utils/analytics-utils";
 
-export const FEE = new Percent("3", "1000"); // 0.3%
+export const FEE = new Percent("4", "1000"); // 0.4%
 
 // tslint:disable-next-line:max-func-body-length
 const useSwapRouter = () => {
@@ -153,7 +153,7 @@ const useSwapRouter = () => {
 
     const calculateSwapFee = (fromAmount: ethers.BigNumber) => {
         // return fromAmount.mul(3).div(1000); // fee for sushiswap on ethereum
-        return fromAmount.mul(2).div(1000); // fee for pancakeswap on bsc
+        return fromAmount.mul(4).div(1000); // fee for luaswap on Tomochain
     };
 
     return {

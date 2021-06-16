@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
-import { Pair } from "@pancakeswap-libs/sdk";
+import { Pair } from "@luaswap/sdk";
 import useAsyncEffect from "use-async-effect";
 import { EthersContext } from "../context/EthersContext";
 import LPToken from "../types/LPToken";

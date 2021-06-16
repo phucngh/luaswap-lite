@@ -1,23 +1,18 @@
 import { useCallback } from "react";
 
-import { ChainId, Currency, ETHER, Fetcher, Pair, Token, WETH } from "@pancakeswap-libs/sdk";
+import { ChainId, Currency, TOMO, Fetcher, Pair, Token, WETH } from "@luaswap/sdk";
 import { ethers } from "ethers";
 
-const WBTC = new Token(ChainId.MAINNET, "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599", 8, "WBTC", "Wrapped BTC");
-const DAI = new Token(ChainId.MAINNET, "0x6B175474E89094C44Da98b954EedeAC495271d0F", 18, "DAI", "Dai Stablecoin");
-const USDC = new Token(ChainId.MAINNET, "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", 6, "USDC", "USD//C");
-const USDT = new Token(ChainId.MAINNET, "0xdAC17F958D2ee523a2206206994597C13D831ec7", 6, "USDT", "Tether USD");
-const SUSHI = new Token(ChainId.MAINNET, "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2", 18, "SUSHI", "SushiToken");
-const YAM = new Token(ChainId.MAINNET, "0x0e2298E3B3390e3b945a5456fBf59eCc3f55DA16", 18, "YAM", "YAM");
-const AMPL = new Token(ChainId.MAINNET, "0xD46bA6D942050d489DBd938a2C909A5d5039A161", 9, "AMPL", "Ampleforth");
+const WBTC = new Token(ChainId.TOMOCHAIN_MAINNET, "0xAE44807D8A9CE4B30146437474Ed6fAAAFa1B809", 8, "WBTC", "Wrapped BTC");
+const ETH = new Token(ChainId.TOMOCHAIN_MAINNET, "0x2EAA73Bd0db20c64f53fEbeA7b5F5E5Bccc7fb8b", 18, "ETH", "Wrapped ETH");
+const USDT = new Token(ChainId.TOMOCHAIN_MAINNET, "0x381B31409e4D220919B2cFF012ED94d70135A59e", 6, "USDT", "Tether USD");
+const LUA = new Token(ChainId.TOMOCHAIN_MAINNET, '0x7262fa193e9590b2e075c3c16170f3f2f32f5c74', 18, "LUA", "LuaToken")
 
-const BASES_TO_CHECK_TRADES_AGAINST = [WETH[ChainId.MAINNET], WBTC, DAI, USDC, USDT, SUSHI, YAM];
-const CUSTOM_BASES = {
-    [AMPL.address]: [DAI, WETH[ChainId.MAINNET], WBTC]
-};
+const BASES_TO_CHECK_TRADES_AGAINST = [WETH[ChainId.TOMOCHAIN_MAINNET], ETH, USDT, LUA];
+const CUSTOM_BASES = {};
 
 function wrappedCurrency(currency: Currency | undefined): Token | undefined {
-    return currency === ETHER ? WETH[ChainId.MAINNET] : currency instanceof Token ? currency : undefined;
+    return currency === TOMO ? WETH[ChainId.TOMOCHAIN_MAINNET] : currency instanceof Token ? currency : undefined;
 }
 
 // Source: https://github.com/Uniswap/uniswap-interface/blob/master/src/hooks/Trades.ts

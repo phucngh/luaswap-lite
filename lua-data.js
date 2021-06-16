@@ -8,8 +8,8 @@ const graphAPIEndpoints = {
 	bar: 'https://api.thegraph.com/subgraphs/name/sushiswap/sushi-bar',
 	timelock: 'https://api.thegraph.com/subgraphs/name/sushiswap/sushi-timelock',
 	maker: 'https://api.thegraph.com/subgraphs/name/sushiswap/sushi-maker',
-	blocklytics: 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks',
-	exchange: 'https://api.thegraph.com/subgraphs/name/pancakeswap/exchange'
+	blocklytics: 'https://api.luaswap.org/subgraphs/name/phucngh/ethereum-blocks',
+	exchange: 'https://api.luaswap.org/subgraphs/name/phucngh/Luaswap'
 };
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
 	graphAPIEndpoints,
 	weth: {
 		price() {
-			let weth_usdt_pair = "0x20bcc3b8a0091ddac2d0bc30f68e6cbb97de59cd"
+			let weth_usdt_pair = "0x347f551eaba062167779c9c336aa681526857b81"
 			return pageResults({
 				api: graphAPIEndpoints.exchange,
 				query: {

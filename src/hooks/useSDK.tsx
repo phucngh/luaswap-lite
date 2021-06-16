@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@pancakeswap-libs/sdk";
+import { Currency, CurrencyAmount, Fetcher, Pair, TokenAmount, Trade } from "@luaswap/sdk";
 import { ethers } from "ethers";
 import { EthersContext } from "../context/EthersContext";
 import Token from "../types/Token";
@@ -22,10 +22,11 @@ const useSDK = () => {
             if (provider) {
                 const eth = isNativeToken(fromToken);
                 const from = convertToken(fromToken);
-                const to = isNativeToken(toToken) ? Currency.ETHER : convertToken(toToken);
+                const to = isNativeToken(toToken) ? Currency.TOMO : convertToken(toToken);
+                
                 const pairs = await loadAllCommonPairs(from, to, provider);
                 const amount = eth
-                    ? CurrencyAmount.ether(fromAmount.toString())
+                    ? CurrencyAmount.tomo(fromAmount.toString())
                     : new TokenAmount(from, fromAmount.toString());
                 return Trade.bestTradeExactIn(pairs, amount, to, { maxHops: 3, maxNumResults: 1 })[0];
             }

@@ -38,7 +38,6 @@ const useSettlement = () => {
     const cancelOrder = useCallback(async (order: Order, signer: ethers.Signer) => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const args = await order.toCancellArgs();
-        debugger
         const gasLimit = await settlement.estimateGas.cancelOrder(args.hash, args.maker);
         const tx = await settlement.cancelOrder(args.hash, args.maker, {
             gasLimit: gasLimit.mul(120).div(100)
@@ -50,7 +49,7 @@ const useSettlement = () => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderCanceled(null);
         // @ts-ignore
-        const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
+        const fromBlock = (await signer.provider.getBlockNumber()) - 5000;
         return await settlement.queryFilter(filter,fromBlock);
     }, []);
 
@@ -58,7 +57,7 @@ const useSettlement = () => {
         const settlement = getContract("Settlement", SETTLEMENT, signer);
         const filter = settlement.filters.OrderFilled(hash);
         // @ts-ignore
-        const fromBlock = (await signer.provider.getBlockNumber()) - 4800;
+        const fromBlock = (await signer.provider.getBlockNumber()) - 5000;
         return await settlement.queryFilter(filter, fromBlock);
     }, []);
 
@@ -171,7 +170,7 @@ export class Order {
         const domain = {
             name: "OrderBook",
             version: "1",
-            chainId: 56,
+            chainId: 88,
             verifyingContract: ORDER_BOOK
         };
         const types = {

@@ -51,7 +51,7 @@ const StakeScreen = () => {
 
 const Staking = () => {
     const { chainId } = useContext(EthersContext);
-    if (chainId !== 56) return <ChangeNetwork />;
+    if (chainId !== 88) return <ChangeNetwork />;
     const t = useTranslation();
     const state = useStakingState();
     return (

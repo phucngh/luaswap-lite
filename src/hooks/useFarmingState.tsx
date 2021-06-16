@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from "react";
 
-import { TokenAmount } from "@pancakeswap-libs/sdk";
+import { TokenAmount } from "@luaswap/sdk";
 import { ethers } from "ethers";
 import useAsyncEffect from "use-async-effect";
 import { MASTER_CHEF } from "../constants/contracts";

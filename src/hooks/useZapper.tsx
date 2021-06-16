@@ -1,6 +1,6 @@
 import { useCallback, useContext } from "react";
 
-import { Percent, Router, TokenAmount } from "@pancakeswap-libs/sdk";
+import { Percent, Router, TokenAmount } from "@luaswap/sdk";
 import { signERC2612Permit } from "eth-permit";
 import { ethers } from "ethers";
 import { ROUTER, ZAP_IN, ZAP_OUT } from "../constants/contracts";

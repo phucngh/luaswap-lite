@@ -1,12 +1,12 @@
-import { FACTORY_ADDRESS as SUSHISWAP_FACTORY, Pair } from "@pancakeswap-libs/sdk";
+import { FACTORY_ADDRESS as TOMO_FACTORY_ADDRESS, Pair } from "@luaswap/sdk";
 import luaData from "../../lua-data.js";
 import { FACTORY_ADDRESS as UNISWAP_FACTORY } from "@uniswap/sdk";
 import { ethers } from "ethers";
 import _ from "lodash";
 import { LP_TOKEN_SCANNER, MASTER_CHEF, ORDER_BOOK, SETTLEMENT } from "../constants/contracts";
 import Fraction from "../constants/Fraction";
-import { BNB, ETH, TOMO } from "../constants/tokens";
-import { ALCHEMY_PROVIDER, KOVAN_PROVIDER, TOMOCHAIN_MAINET_PROVIDER, BSC_MAINET_PROVIDER } from "../context/EthersContext";
+import { TOMO } from "../constants/tokens";
+import { ALCHEMY_PROVIDER, KOVAN_PROVIDER, TOMOCHAIN_MAINET_PROVIDER } from "../context/EthersContext";
 import { Order, OrderStatus } from "../hooks/useSettlement";
 import LPToken from "../types/LPToken";
 import Token from "../types/Token";
@@ -29,45 +29,101 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
     // const response = await fetch("https://lite.sushi.com/tokens.json");
     // const json = await response.json();
     const json = {
-        "name": "SushiSwap Token List",
-        "timestamp": "2020-11-26T00:00:00+00:00",
+        "name": "LuaSwap Default List",
+        "timestamp": "2021-04-27T04:25:08.682Z",
         "version": {
-            "major": 1,
+            "major": 4,
             "minor": 0,
             "patch": 0
         },
-        "logoURI": "https://lite.sushi.com/logo.png",
+        "tags": {},
+        "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xB1f66997A5760428D3a87D68b90BfE0aE64121cC/logo.png",
         "keywords": [
-            "nomichef",
-            "default",
-            "list"
+            "luaswap",
+            "default"
         ],
-        "tokens": [
+        "tokens": [    
+            // {
+            // "name": "Wrapped BTC",
+            // "address": "0xAE44807D8A9CE4B30146437474Ed6fAAAFa1B809",
+            // "symbol": "BTC",
+            // "decimals": 8,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599/logo.png"
+            // },
             {
-            "address": "0x2170Ed0880ac9A755fd29B2688956BD959F933F8",
-            "chainId": 56,
-            "name": "Ethereum Token",
+            "name": "Wrapped Ether",
+            "address": "0x2EAA73Bd0db20c64f53fEbeA7b5F5E5Bccc7fb8b",
             "symbol": "ETH",
             "decimals": 18,
-            "logoURI": "https://lite.sushi.com/images/tokens/ETH.png"
+            "chainId": 88,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png"
+            },
+            // {
+            // "name": "Wrapped FTX Token",
+            // "address": "0x33fa3c0c714638f12339F85dae89c42042a2D9Af",
+            // "symbol": "FTT",
+            // "decimals": 18,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x50D1c9771902476076eCFc8B2A83Ad6b9355a4c9/logo.png"
+            // },
+            // {
+            // "name": "Hybrix Hydra",
+            // "address": "0xA7551BA0d52C763fb6f8866DE63827aA593f20Bc",
+            // "symbol": "HY",
+            // "decimals": 18,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x9b53E429B0baDd98ef7F01F03702986c516a5715/logo.png"
+            // },
+            {
+            "name": "LuaToken",
+            "address": "0x7262fa193e9590B2E075c3C16170f3f2f32F5C74",
+            "symbol": "LUA",
+            "decimals": 18,
+            "chainId": 88,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xB1f66997A5760428D3a87D68b90BfE0aE64121cC/logo.png"
+            },
+            // {
+            // "name": "Wrapped Serum",
+            // "address": "0xc01643aC912B6a8ffC50CF8c1390934A6142bc91",
+            // "symbol": "SRM",
+            // "decimals": 6,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x476c5E26a75bd202a9683ffD34359C0CC15be0fF/logo.png"
+            // },
+            // {
+            // "name": "Tomo Finance",
+            // "address": "0xB2444519F4653831b097B388D985aB3FdD5D600e",
+            // "symbol": "TAI",
+            // "decimals": 18,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/tomochain/luaswap-token-list/master/src/tokens/icons/tomochain/0xB2444519F4653831b097B388D985aB3FdD5D600e.png"
+            // },
+            // {
+            // "name": "Wrapped USD Coin",
+            // "address": "0xCCA4E6302510d555B654B3EaB9c0fCB223BCFDf0",
+            // "symbol": "USDC",
+            // "decimals": 6,
+            // "chainId": 88,
+            // "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48/logo.png"
+            // },
+            {
+            "name": "Wrapped USDT",
+            "address": "0x381B31409e4D220919B2cFF012ED94d70135A59e",
+            "symbol": "USDT",
+            "decimals": 6,
+            "chainId": 88,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xdAC17F958D2ee523a2206206994597C13D831ec7/logo.png"
             },
             {
-            "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
-            "chainId": 56,
-            "name": "Wrapped BNB",
-            "symbol": "WBNB",
+            "name": "Wrapped TOMO",
+            "address": "0xB1f66997A5760428D3a87D68b90BfE0aE64121cC",
+            "symbol": "WTOMO",
             "decimals": 18,
-            "logoURI": "https://exchange.pancakeswap.finance/images/coins/bnb.png"
-            },
-            {
-            "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
-            "chainId": 56,
-            "name": "BUSD Token",
-            "symbol": "BUSD",
-            "decimals": 18,
-            "logoURI": "https://exchange.pancakeswap.finance/images/coins/0xe9e7cea3dedca5984780bafc599bd69add087d56.png"
+            "chainId": 88,
+            "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x05D3606d5c81EB9b7B18530995eC9B29da05FaBa/logo.png"
             }
-    ]
+        ]
     }
     const tokens = [...json.tokens, ...(customTokens || [])]
 
@@ -78,7 +134,7 @@ export const fetchTokens = async (provider: ethers.providers.BaseProvider, accou
     );
     return [
         {
-            ...BNB,
+            ...TOMO,
             balance: await provider.getBalance(account)
         },
         ...tokens.map((token, i) => ({
@@ -239,7 +295,7 @@ const fetchPairTokens = async (pair: string, tokens: Token[], provider: ethers.p
 };
 
 export const fetchMyLPTokens = async (account: string, tokens: Token[], provider: ethers.providers.JsonRpcProvider) => {
-    return await fetchLPTokens(SUSHISWAP_FACTORY, account, tokens, provider);
+    return await fetchLPTokens(TOMO_FACTORY_ADDRESS, account, tokens, provider);
 };
 
 export const fetchMyUniswapLPTokens = async (
@@ -400,7 +456,7 @@ export const fetchMyLimitOrders = async (
     tokens?: Token[],
     canceledHashes?: string[]
 ) => {
-    const orderBook = getContract("OrderBook", ORDER_BOOK, BSC_MAINET_PROVIDER);
+    const orderBook = getContract("OrderBook", ORDER_BOOK, TOMOCHAIN_MAINET_PROVIDER);
     const settlement = await getContract("Settlement", SETTLEMENT, provider);
     const maker = await signer.getAddress();
     const length = await orderBook.numberOfHashesOfMaker(maker);
